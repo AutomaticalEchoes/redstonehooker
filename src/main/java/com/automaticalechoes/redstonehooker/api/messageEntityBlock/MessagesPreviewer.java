@@ -18,8 +18,16 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class MessagesPreviewer {
     private static final Font font = Minecraft.getInstance().font;
 
-    public static void render(MessagesPreviewable p_112307_, float p_112308_, PoseStack p_112309_, MultiBufferSource p_112310_, int p_112311_, int p_112312_) {
-        if(p_112307_.shouldShowMessages()) renderMessage(p_112307_, p_112308_, p_112309_, p_112310_, p_112311_, p_112312_);
+    public static void RenderEachClickFace(MessagesPreviewable p_112307_, float p_112308_, PoseStack p_112309_, MultiBufferSource p_112310_, int p_112311_, int p_112312_) {
+        if(p_112307_.shouldShowMessages()) renderSingleFace(p_112307_,p_112308_,p_112309_,p_112310_,ClickFace(),p_112311_,p_112312_);
+    }
+
+    public static void RenderOnClickFace(MessagesPreviewable p_112307_, float p_112308_, PoseStack p_112309_, MultiBufferSource p_112310_, int p_112311_, int p_112312_,Direction direction){
+        if(p_112307_.shouldShowMessages() && ClickFace() ==  direction) renderSingleFace(p_112307_,p_112308_,p_112309_,p_112310_,direction,p_112311_,p_112312_);
+    }
+
+    public static void RenderOnFace(MessagesPreviewable p_112307_, float p_112308_, PoseStack p_112309_, MultiBufferSource p_112310_, int p_112311_, int p_112312_,Direction direction){
+        if(p_112307_.shouldShowMessages()) renderSingleFace(p_112307_,p_112308_,p_112309_,p_112310_,direction,p_112311_,p_112312_);
     }
 
     public static void renderSingleFace(MessagesPreviewable p_112307_, float p_112308_, PoseStack p_112309_, MultiBufferSource p_112310_, Direction face, int p_112311_, int p_112312_){
@@ -37,11 +45,10 @@ public class MessagesPreviewer {
         p_112309_.popPose();
     }
 
-    public static void renderMessage(MessagesPreviewable p_112307_, float p_112308_, PoseStack p_112309_, MultiBufferSource p_112310_, int p_112311_, int p_112312_){
+    public static Direction ClickFace(){
         Minecraft instance = Minecraft.getInstance();
         BlockHitResult hitResult = (BlockHitResult) instance.hitResult;
-        Direction direction = hitResult.getDirection();
-        renderSingleFace(p_112307_,p_112308_,p_112309_,p_112310_,direction,p_112311_,p_112312_);
+        return hitResult.getDirection();
     }
 
 }

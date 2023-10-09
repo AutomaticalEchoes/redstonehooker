@@ -26,9 +26,9 @@ import java.util.Optional;
 
 @OnlyIn(Dist.CLIENT)
 public class InventoryEntityProxyBlockEntityRender implements BlockEntityRenderer<InventoryEntityProxyBlockEntity> , FakeBlock {
-    public static final ResourceLocation BORDER_LOCATION = new ResourceLocation(RedstoneHooker.MODID ,"textures/model/proxy/inventory_entity/border.png");
-    public static final ResourceLocation ACTIVE_LOCATION = new ResourceLocation(RedstoneHooker.MODID ,"textures/model/proxy/inventory_entity/active.png");
-    public static final ResourceLocation NORMAL = new ResourceLocation(RedstoneHooker.MODID,"textures/model/proxy/normal.png");
+    public static final ResourceLocation BORDER_LOCATION = new ResourceLocation(RedstoneHooker.MODID ,"textures/block/inventory_proxy_border.png");
+    public static final ResourceLocation ACTIVE_LOCATION = new ResourceLocation(RedstoneHooker.MODID ,"textures/block/inventory_proxy_active.png");
+    public static final ResourceLocation NORMAL = new ResourceLocation(RedstoneHooker.MODID,"textures/block/proxy_normal.png");
     private final EntityRenderDispatcher entityRenderDispatcher;
     private final ModelPart fakeBlock;
 

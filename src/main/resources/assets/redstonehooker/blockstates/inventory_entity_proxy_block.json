@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "redstonehooker:block/proxy_haskey"
+      "model": "redstonehooker:block/proxy"
     }
   }
 }

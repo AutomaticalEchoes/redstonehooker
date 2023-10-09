@@ -1,0 +1,17 @@
+{
+
+  "item.redstonehooker.hooker_adjust_item": "调节器",
+  "item.redstonehooker.address_item": "地址标签：方块",
+  "item.redstonehooker.address_name_tag_item": "地址标签：实体",
+
+  "block.redstonehooker.container_proxy_block": "方块实体容器代理箱",
+  "block.redstonehooker.anisotropic_signal_block": "信号监听器",
+  "block.redstonehooker.inventory_entity_proxy_block": "实体容器代理箱",
+
+
+  "tab.error": "错误:",
+  "tab.address": "坐标:",
+  "address_null_type_1": "标签无地址坐标",
+  "address_null_type_2": "坐标地址无方块实体",
+  "address_null_type_3": "禁止套娃"
+}

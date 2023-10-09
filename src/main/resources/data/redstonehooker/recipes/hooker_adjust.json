@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "1  ",
+    "2  ",
+    "3  "
+  ],
+  "key": {
+    "1": {
+      "tag": "forge:ingots/gold"
+    },
+    "2": {
+      "tag": "forge:ingots/copper"
+    },
+    "3": {
+      "item": "minecraft:redstone"
+    }
+  },
+  "result": {
+    "item": "redstonehooker:hooker_adjust_item"
+  },
+  "show_notification": true
+}

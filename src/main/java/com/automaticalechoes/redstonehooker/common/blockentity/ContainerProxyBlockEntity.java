@@ -77,6 +77,17 @@ public class ContainerProxyBlockEntity extends DataBlockEntity implements Addres
         }
     }
 
+    @Override
+    public void updateAddressItem(ItemStack itemStack, int num) {
+        if(proxyTarget != null){
+            reset();
+        }
+        if(itemStack.isEmpty()) return;
+        setAddressItem(itemStack);
+        blockChange(this.worldPosition);
+        this.setChanged();
+    }
+
     public void blockChange(BlockPos pos){
         this.proxyTargetPos = getAddress(0);
         if(proxyTargetPos == null) {
@@ -99,7 +110,6 @@ public class ContainerProxyBlockEntity extends DataBlockEntity implements Addres
             serverLevel.getPoiManager().getType(proxyTargetPos)
                     .ifPresent(poiTypeHolder -> serverLevel.getPoiManager().add(pos, poiTypeHolder));
         }
-        this.setChanged();
     }
 
     public void reset(){
@@ -123,16 +133,6 @@ public class ContainerProxyBlockEntity extends DataBlockEntity implements Addres
 
     public void onRemove(){
         reset();
-    }
-
-    @Override
-    public void updateAddressItem(ItemStack itemStack, int num) {
-        if(proxyTarget != null){
-            reset();
-        }
-        if(itemStack.isEmpty()) return;
-        setAddressItem(itemStack);
-        blockChange(this.worldPosition);
     }
 
     @Override
@@ -167,10 +167,11 @@ public class ContainerProxyBlockEntity extends DataBlockEntity implements Addres
     public Component messages() {
         MutableComponent component = Component.empty();
         BlockPos address = getAddress(0);
-        MutableComponent addressComponent = Component.translatable("address.tab").append(address != null ? address.getCenter().toString() : "none");
+        MutableComponent addressComponent = Component.translatable("tab.address").append(address != null ? address.getCenter().toString() : "none");
         component.append(addressComponent);
         if(this.blockEntityData.get(NULL_TYPE) != 0){
-            component.append(Component.translatable("address_null_type_" + this.blockEntityData.get(NULL_TYPE)));
+            component.append(Component.translatable("tab.error")
+                                      .append(Component.translatable("address_null_type_" + this.blockEntityData.get(NULL_TYPE))));
         }
         return component;
     }

@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "redstonehooker:block/proxy_block"
+      "model": "minecraft:block/sand"
     }
   }
 }

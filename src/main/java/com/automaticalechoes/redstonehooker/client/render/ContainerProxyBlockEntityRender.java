@@ -41,9 +41,9 @@ import java.util.Optional;
 
 @OnlyIn(Dist.CLIENT)
 public class ContainerProxyBlockEntityRender implements BlockEntityRenderer<ContainerProxyBlockEntity> , FakeBlock {
-    public static final ResourceLocation BORDER_LOCATION = new ResourceLocation(RedstoneHooker.MODID ,"textures/model/proxy/container/border.png");
-    public static final ResourceLocation ACTIVE_LOCATION = new ResourceLocation(RedstoneHooker.MODID ,"textures/model/proxy/container/active.png");
-    public static final ResourceLocation NORMAL = new ResourceLocation(RedstoneHooker.MODID,"textures/model/proxy/normal.png");
+    public static final ResourceLocation BORDER_LOCATION = new ResourceLocation(RedstoneHooker.MODID ,"textures/block/container_proxy_border.png");
+    public static final ResourceLocation ACTIVE_LOCATION = new ResourceLocation(RedstoneHooker.MODID ,"textures/block/container_proxy_active.png");
+    public static final ResourceLocation NORMAL = new ResourceLocation(RedstoneHooker.MODID,"textures/block/proxy_normal.png");
     private final ItemRenderer itemRenderer;
     private final BlockRenderDispatcher blockRenderDispatcher;
     private final ModelPart fakeBlock;
@@ -57,7 +57,7 @@ public class ContainerProxyBlockEntityRender implements BlockEntityRenderer<Cont
         ClientLevel level = Minecraft.getInstance().level;
         BlockPos pos = p_112399_.getAddress(0);
         Optional<Direction> facing = level.getBlockState(p_112399_.getBlockPos()).getOptionalValue(ContainerProxyBlock.FACING);
-        MessagesPreviewer.render(p_112399_, p_112400_, p_112401_, p_112402_, p_112403_, p_112404_);
+
 
 
         boolean flag = RedstoneHooker.ShouldShow();
@@ -70,6 +70,7 @@ public class ContainerProxyBlockEntityRender implements BlockEntityRenderer<Cont
         });
 
         if(flag){
+            MessagesPreviewer.RenderOnFace(p_112399_, p_112400_, p_112401_, p_112402_, p_112403_, p_112404_,Direction.SOUTH);
             renderFakeBorder(p_112400_,p_112401_,p_112402_,p_112403_,p_112404_, p_112402_.getBuffer(RenderType.entityTranslucentEmissive(BORDER_LOCATION)));
             if(active){
                 p_112401_.pushPose();
