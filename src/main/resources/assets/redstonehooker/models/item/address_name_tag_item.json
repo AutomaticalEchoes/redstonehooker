@@ -1,0 +1,6 @@
+{
+	"parent": "minecraft:item/generated",
+	"textures": {
+		"layer0": "redstonehooker:item/address_name_tag"
+	}
+}
