@@ -27,7 +27,7 @@ import javax.annotation.Nullable;
 
 public class ContainerProxyBlockEntity extends DataBlockEntity implements AddressItemInner<BlockPos> , MessagesPreviewable {
     private static final EntityDataAccessor<ItemStack> ADDRESS_ITEM = SynchedBlockEntityData.defineId(ContainerProxyBlockEntity.class, EntityDataSerializers.ITEM_STACK);
-    private static final EntityDataAccessor<Integer> NULL_TYPE =  SynchedBlockEntityData.defineId(ContainerProxyBlockEntity.class,EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> ERROR_TYPE =  SynchedBlockEntityData.defineId(ContainerProxyBlockEntity.class,EntityDataSerializers.INT);
     @Nullable private BlockPos proxyTargetPos;
     @Nullable private BlockEntity proxyTarget = null;
     public ContainerProxyBlockEntity(BlockPos p_155229_, BlockState p_155230_) {
@@ -37,7 +37,7 @@ public class ContainerProxyBlockEntity extends DataBlockEntity implements Addres
     @Override
     public void define() {
         this.blockEntityData.define(ADDRESS_ITEM,ItemStack.EMPTY);
-        this.blockEntityData.define(NULL_TYPE,0);
+        this.blockEntityData.define(ERROR_TYPE,0);
     }
 
     @Override
@@ -66,6 +66,7 @@ public class ContainerProxyBlockEntity extends DataBlockEntity implements Addres
     }
 
     public void tick(Level level, BlockPos pos, BlockState state){
+        if(!(level instanceof ServerLevel serverLevel)) return;
         if(isProxyNull()){
             if(getAddressItem(0) != ItemStack.EMPTY)
                 blockChange(pos);
@@ -91,17 +92,17 @@ public class ContainerProxyBlockEntity extends DataBlockEntity implements Addres
     public void blockChange(BlockPos pos){
         this.proxyTargetPos = getAddress(0);
         if(proxyTargetPos == null) {
-            this.blockEntityData.set(NULL_TYPE,1);
+            setError(1);
             return;
         }
 
         BlockEntity vanillaBlockEntity = Proxys.getVanillaBlockEntity(this.level, proxyTargetPos);
 
         if(vanillaBlockEntity == null){
-            this.blockEntityData.set(NULL_TYPE,2);
+            setError(2);
             return;
         }else if(vanillaBlockEntity instanceof ContainerProxyBlockEntity){
-            this.blockEntityData.set(NULL_TYPE,3);
+            setError(3);
             return;
         }
 
@@ -119,7 +120,7 @@ public class ContainerProxyBlockEntity extends DataBlockEntity implements Addres
         }
         this.proxyTarget = null;
         this.proxyTargetPos = null;
-        this.blockEntityData.set(NULL_TYPE,0);
+        setError(0);
         if(getAddressItem(0) != ItemStack.EMPTY){
             Containers.dropItemStack(this.level,this.worldPosition.getX(),this.worldPosition.getY(),this.worldPosition.getZ(),getAddressItem(0));
             setAddressItem(ItemStack.EMPTY);
@@ -163,15 +164,23 @@ public class ContainerProxyBlockEntity extends DataBlockEntity implements Addres
         return BlockPos.of(aLong);
     }
 
+    public void setError(Integer num){
+        this.blockEntityData.set(ERROR_TYPE,num);
+    }
+
+    public Integer ErrorType(){
+        return this.blockEntityData.get(ERROR_TYPE);
+    }
+
     @Override
     public Component messages() {
         MutableComponent component = Component.empty();
         BlockPos address = getAddress(0);
         MutableComponent addressComponent = Component.translatable("tab.address").append(address != null ? address.getCenter().toString() : "none");
         component.append(addressComponent);
-        if(this.blockEntityData.get(NULL_TYPE) != 0){
+        if(ErrorType() != 0){
             component.append(Component.translatable("tab.error")
-                                      .append(Component.translatable("address_null_type_" + this.blockEntityData.get(NULL_TYPE))));
+                                      .append(Component.translatable("address_error_type_" + ErrorType())));
         }
         return component;
     }

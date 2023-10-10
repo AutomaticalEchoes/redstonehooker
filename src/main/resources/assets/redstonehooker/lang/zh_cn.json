@@ -9,9 +9,16 @@
   "block.redstonehooker.inventory_entity_proxy_block": "实体容器代理箱",
 
 
+  "tab.type": "类型:",
   "tab.error": "错误:",
   "tab.address": "坐标:",
-  "address_null_type_1": "标签无地址坐标",
-  "address_null_type_2": "坐标地址无方块实体",
-  "address_null_type_3": "禁止套娃"
+  "tab.proxy_target": "实体:",
+
+  "type.entity": "背包持有实体",
+  "type.block_pos": "方块坐标",
+
+  "address_error_type_1": "无效标签",
+  "address_error_type_2": "坐标无方块实体",
+  "address_error_type_3": "禁止套娃",
+  "address_error_type_4": "无效实体"
 }

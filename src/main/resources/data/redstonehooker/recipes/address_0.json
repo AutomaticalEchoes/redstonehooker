@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "redstonehooker:address_item"
+    }
+  ],
+  "result": {
+    "item": "redstonehooker:address_item"
+  },
+  "show_notification": true
+}

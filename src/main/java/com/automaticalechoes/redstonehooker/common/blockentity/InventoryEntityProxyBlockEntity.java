@@ -1,12 +1,17 @@
 package com.automaticalechoes.redstonehooker.common.blockentity;
 
+import com.automaticalechoes.redstonehooker.RedstoneHooker;
 import com.automaticalechoes.redstonehooker.api.addressItem.AddressItemInner;
 import com.automaticalechoes.redstonehooker.api.dataBlockEntity.DataBlockEntity;
 import com.automaticalechoes.redstonehooker.api.dataBlockEntity.SynchedBlockEntityData;
+import com.automaticalechoes.redstonehooker.api.messageEntityBlock.MessagesPreviewable;
 import com.automaticalechoes.redstonehooker.common.item.AddressItem;
 import com.automaticalechoes.redstonehooker.register.BlockEntityRegister;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.server.level.ServerLevel;
@@ -22,9 +27,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import javax.annotation.Nullable;
 import java.util.UUID;
 
-public class InventoryEntityProxyBlockEntity extends DataBlockEntity implements Container , AddressItemInner<UUID> {
+public class InventoryEntityProxyBlockEntity extends DataBlockEntity implements Container , MessagesPreviewable, AddressItemInner<UUID> {
     private static final EntityDataAccessor<ItemStack> ADDRESS_ITEM = SynchedBlockEntityData.defineId(InventoryEntityProxyBlockEntity.class, EntityDataSerializers.ITEM_STACK);
     private static final EntityDataAccessor<Integer> ENTITY_ID = SynchedBlockEntityData.defineId(InventoryEntityProxyBlockEntity.class,EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> ERROR_TYPE =  SynchedBlockEntityData.defineId(InventoryEntityProxyBlockEntity.class,EntityDataSerializers.INT);
     @Nullable
     private InventoryCarrier proxyTarget = null;
     public InventoryEntityProxyBlockEntity(BlockPos p_155630_, BlockState p_155631_) {
@@ -35,6 +41,7 @@ public class InventoryEntityProxyBlockEntity extends DataBlockEntity implements 
     public void define() {
         this.blockEntityData.define(ADDRESS_ITEM,ItemStack.EMPTY);
         this.blockEntityData.define(ENTITY_ID,0);
+        this.blockEntityData.define(ERROR_TYPE,0);
     }
 
     @Override
@@ -115,6 +122,8 @@ public class InventoryEntityProxyBlockEntity extends DataBlockEntity implements 
     }
 
     public void reset(){
+        setProxyTargetID(0);
+        setError(0);
         dropItem(getAddressItem(0));
         setAddressItem(ItemStack.EMPTY);
         setChanged();
@@ -151,12 +160,18 @@ public class InventoryEntityProxyBlockEntity extends DataBlockEntity implements 
         if(isProxyNull){
             proxyTarget = null;
             setProxyTargetID(0);
-            if(!this.getAddressItem(0).isEmpty() && getAddress(0) != null
-                    && serverLevel.getEntity(getAddress(0)) instanceof InventoryCarrier inventoryCarrier){
+            if(this.getAddressItem(0).isEmpty()){
+                setError(0);
+            }else if(getAddress(0) == null){
+                setError(1);
+            }else if(serverLevel.getEntity(getAddress(0)) instanceof InventoryCarrier inventoryCarrier){
                 Entity entity = serverLevel.getEntity(getAddress(0));
                 this.proxyTarget = inventoryCarrier;
                 setProxyTargetID(entity.getId());
+            }else{
+                setError(4);
             }
+
         }
 
         if(this.blockEntityData.isDirty()){
@@ -177,5 +192,38 @@ public class InventoryEntityProxyBlockEntity extends DataBlockEntity implements 
 
     public void onRemove(){
         reset();
+    }
+
+    public void setError(Integer num){
+        this.blockEntityData.set(ERROR_TYPE,num);
+    }
+
+    public Integer ErrorType(){
+        return this.blockEntityData.get(ERROR_TYPE);
+    }
+
+    @Override
+    public Component messages() {
+        MutableComponent component = Component.empty();
+        Component proxyTarget = Component.translatable("none");
+        Integer proxyTargetID = getProxyTargetID();
+        if(proxyTargetID != null){
+            Entity entity = Minecraft.getInstance().level.getEntity(proxyTargetID);
+            if(entity != null && entity.isAlive())
+                proxyTarget = entity.getDisplayName();
+        }
+
+        MutableComponent addressComponent = Component.translatable("tab.proxy_target").append(proxyTarget);
+        component.append(addressComponent);
+        if(ErrorType() != 0){
+            component.append(Component.translatable("tab.error")
+                    .append(Component.translatable("address_error_type_" + ErrorType())));
+        }
+        return component;
+    }
+
+    @Override
+    public boolean shouldShowMessages() {
+        return RedstoneHooker.ShouldShow();
     }
 }

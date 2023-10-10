@@ -2,6 +2,7 @@ package com.automaticalechoes.redstonehooker.client.render;
 
 import com.automaticalechoes.redstonehooker.RedstoneHooker;
 import com.automaticalechoes.redstonehooker.api.fakeBlock.FakeBlock;
+import com.automaticalechoes.redstonehooker.api.messageEntityBlock.MessagesPreviewer;
 import com.automaticalechoes.redstonehooker.client.model.FakeChestModel;
 import com.automaticalechoes.redstonehooker.common.block.ContainerProxyBlock;
 import com.automaticalechoes.redstonehooker.common.block.InventoryEntityProxyBlock;
@@ -16,9 +17,12 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
+import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.item.ItemDisplayContext;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -30,10 +34,12 @@ public class InventoryEntityProxyBlockEntityRender implements BlockEntityRendere
     public static final ResourceLocation ACTIVE_LOCATION = new ResourceLocation(RedstoneHooker.MODID ,"textures/block/inventory_proxy_active.png");
     public static final ResourceLocation NORMAL = new ResourceLocation(RedstoneHooker.MODID,"textures/block/proxy_normal.png");
     private final EntityRenderDispatcher entityRenderDispatcher;
+    private final ItemRenderer itemRenderer;
     private final ModelPart fakeBlock;
 
     public InventoryEntityProxyBlockEntityRender(BlockEntityRendererProvider.Context context) {
-        entityRenderDispatcher = context.getEntityRenderer();
+        this.entityRenderDispatcher = context.getEntityRenderer();
+        this.itemRenderer = context.getItemRenderer();
         this.fakeBlock = context.bakeLayer(FakeChestModel.FAKE_CHEST);
     }
 
@@ -67,8 +73,14 @@ public class InventoryEntityProxyBlockEntityRender implements BlockEntityRendere
                 p_112565_.scale(f, f, f);
                 this.entityRenderDispatcher.render(entity, 0.0D, 0.0D, 0.0D, 0.0F, p_112564_, p_112565_, p_112566_, p_112567_);
                 p_112565_.popPose();
+            }else if(!p_112563_.getAddressItem(0).isEmpty()){
+                ItemStack addressItem = p_112563_.getAddressItem(0);
+                p_112565_.pushPose();
+                p_112565_.translate(0.5F, 0.3F, 0.5F);
+                this.itemRenderer.renderStatic(addressItem, ItemDisplayContext.GROUND,p_112567_,p_112568_,p_112565_,p_112566_,null,11);
+                p_112565_.popPose();
             }
-
+            MessagesPreviewer.RenderOnFace(p_112563_,p_112564_,p_112565_,p_112566_,p_112567_,p_112568_,Direction.SOUTH);
         }else {
             VertexConsumer buffer = p_112566_.getBuffer(RenderType.entityCutout(active ? ACTIVE_LOCATION : NORMAL));
             renderFakeBorder(p_112564_,p_112565_,p_112566_,p_112567_,p_112568_, buffer);

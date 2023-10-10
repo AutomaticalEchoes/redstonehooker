@@ -12,6 +12,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import org.joml.Matrix4f;
 
 
 @OnlyIn(Dist.CLIENT)
@@ -39,8 +40,12 @@ public class MessagesPreviewer {
         Component messages = p_112307_.messages();
         p_112309_.translate(0, 0, - (p_112307_.width() / 2 + p_112307_.border()));
         float v = -(p_112307_.width() / 2 - p_112307_.border()) * 100;
+        int j = ((int)(0.15 * 255.0F) << 24) + 0xFFFFFF;
+
+        Matrix4f matrix4f = p_112309_.last().pose();
         for (int i = 0; i < messages.getSiblings().size(); i++) {
-            font.drawInBatch(messages.getSiblings().get(i), v, i * 10 + v, p_112307_.textColor(), false, p_112309_.last().pose(), p_112310_, Font.DisplayMode.NORMAL, 0, p_112311_);
+            font.drawInBatch(messages.getSiblings().get(i), v, i * 10 + v, -1, false, matrix4f, p_112310_,  Font.DisplayMode.SEE_THROUGH , j, p_112311_);
+            font.drawInBatch(messages.getSiblings().get(i), v, i * 10 + v, -1, false, matrix4f, p_112310_,  Font.DisplayMode.NORMAL , 0, p_112311_);
         }
         p_112309_.popPose();
     }

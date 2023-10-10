@@ -44,12 +44,12 @@ public class ContainerProxyBlockEntityRender implements BlockEntityRenderer<Cont
     public static final ResourceLocation BORDER_LOCATION = new ResourceLocation(RedstoneHooker.MODID ,"textures/block/container_proxy_border.png");
     public static final ResourceLocation ACTIVE_LOCATION = new ResourceLocation(RedstoneHooker.MODID ,"textures/block/container_proxy_active.png");
     public static final ResourceLocation NORMAL = new ResourceLocation(RedstoneHooker.MODID,"textures/block/proxy_normal.png");
-    private final ItemRenderer itemRenderer;
     private final BlockRenderDispatcher blockRenderDispatcher;
+    private final ItemRenderer itemRenderer;
     private final ModelPart fakeBlock;
     public ContainerProxyBlockEntityRender(BlockEntityRendererProvider.Context p_174416_) {
-        this.itemRenderer = p_174416_.getItemRenderer();
         this.blockRenderDispatcher = p_174416_.getBlockRenderDispatcher();
+        this.itemRenderer = p_174416_.getItemRenderer();
         this.fakeBlock = p_174416_.bakeLayer(FakeChestModel.FAKE_CHEST);
     }
 
@@ -57,8 +57,6 @@ public class ContainerProxyBlockEntityRender implements BlockEntityRenderer<Cont
         ClientLevel level = Minecraft.getInstance().level;
         BlockPos pos = p_112399_.getAddress(0);
         Optional<Direction> facing = level.getBlockState(p_112399_.getBlockPos()).getOptionalValue(ContainerProxyBlock.FACING);
-
-
 
         boolean flag = RedstoneHooker.ShouldShow();
         boolean active = pos != null && level.getBlockEntity(pos) != null;
@@ -70,19 +68,21 @@ public class ContainerProxyBlockEntityRender implements BlockEntityRenderer<Cont
         });
 
         if(flag){
-            MessagesPreviewer.RenderOnFace(p_112399_, p_112400_, p_112401_, p_112402_, p_112403_, p_112404_,Direction.SOUTH);
             renderFakeBorder(p_112400_,p_112401_,p_112402_,p_112403_,p_112404_, p_112402_.getBuffer(RenderType.entityTranslucentEmissive(BORDER_LOCATION)));
             if(active){
                 p_112401_.pushPose();
                 p_112401_.scale( 0.5F,0.5F,0.5F);
                 p_112401_.translate(0.5F, 0.5F, 0.5F);
                 blockRenderDispatcher.renderSingleBlock(level.getBlockState(pos), p_112401_,p_112402_,p_112403_,OverlayTexture.NO_OVERLAY);
-//                ItemStack defaultInstance = level.getBlockState(pos).getBlock().asItem().getDefaultInstance();
-//                if(defaultInstance.getItem()!= Items.AIR){
-//                    this.itemRenderer.renderStatic(defaultInstance, ItemDisplayContext.GROUND, p_112403_, OverlayTexture.NO_OVERLAY,p_112401_, p_112402_,level, 0);
-//                }
+                p_112401_.popPose();
+            }else if(p_112399_.getAddressItem(0) != null){
+                ItemStack addressItem = p_112399_.getAddressItem(0);
+                p_112401_.pushPose();
+                p_112401_.translate(0.5F,0.3F,0.5F);
+                itemRenderer.renderStatic(addressItem,ItemDisplayContext.GROUND,p_112403_,p_112404_,p_112401_,p_112402_,null,11);
                 p_112401_.popPose();
             }
+            MessagesPreviewer.RenderOnFace(p_112399_, p_112400_, p_112401_, p_112402_, p_112403_, p_112404_,Direction.SOUTH);
         }else {
             VertexConsumer buffer = p_112402_.getBuffer(RenderType.entityCutout(active ? ACTIVE_LOCATION : NORMAL));
             renderFakeBorder(p_112400_,p_112401_,p_112402_,p_112403_,p_112404_, buffer);
