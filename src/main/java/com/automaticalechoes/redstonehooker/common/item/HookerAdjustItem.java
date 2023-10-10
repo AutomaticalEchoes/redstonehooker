@@ -18,14 +18,12 @@ public class HookerAdjustItem extends Item {
 
     @Override
     public InteractionResult useOn(UseOnContext p_40581_) {
-        InteractionHand hand = p_40581_.getHand();
-        InteractionHand oppositeHand = hand != InteractionHand.MAIN_HAND ? InteractionHand.MAIN_HAND : InteractionHand.OFF_HAND;
         BlockEntity blockEntity = Proxys.getVanillaBlockEntity(p_40581_.getLevel(),p_40581_.getClickedPos());
         int dDataValue = p_40581_.getClickedFace().getOpposite().get3DDataValue();
         boolean isDo = false;
         if(p_40581_.getLevel() instanceof ServerLevel serverLevel && p_40581_.getPlayer() instanceof ServerPlayer serverPlayer){
-            if(serverPlayer.getItemInHand(oppositeHand).getItem() instanceof AddressItem
-                    && AddressItem.putAddress(serverPlayer.getItemInHand(oppositeHand), serverLevel, p_40581_.getClickedPos(),dDataValue)){
+            if(serverPlayer.getItemInHand(InteractionHand.OFF_HAND).getItem() instanceof AddressItem
+                    && AddressItem.putAddress(serverPlayer.getItemInHand(InteractionHand.OFF_HAND), serverLevel, p_40581_.getClickedPos(),dDataValue)){
                 isDo = true;
             }else if(blockEntity instanceof AddressItemInner addressItemInner && addressItemInner.getAddressItem(dDataValue) != ItemStack.EMPTY){
                 addressItemInner.popAddressItem(dDataValue);

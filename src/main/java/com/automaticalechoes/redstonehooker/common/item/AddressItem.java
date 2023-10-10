@@ -8,6 +8,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -27,6 +28,7 @@ public class AddressItem extends Item {
     public static String ADDRESS_ENTITY_ID = AddressItemInner.ADDRESS_ENTITY_ID;
     public static String ADDRESS_ENTITY_CUSTOM_NAME = AddressItemInner.ADDRESS_ENTITY_CUSTOM_NAME;
     public static String ADDRESS_ITEM_COLOR = AddressItemInner.ADDRESS_ITEM_COLOR;
+    public static String IS_PLAYER = AddressItemInner.IS_PLAYER;
     public AddressItem(Properties p_41383_) {
         super(p_41383_);
     }
@@ -34,6 +36,7 @@ public class AddressItem extends Item {
     @Override
     public InteractionResult useOn(UseOnContext p_41427_) {
         if(p_41427_.getLevel() instanceof ServerLevel serverLevel
+                && p_41427_.getHand() == InteractionHand.MAIN_HAND
                 && Proxys.getVanillaBlockEntity(serverLevel,p_41427_.getClickedPos()) instanceof AddressItemInner addressItemInner
                 && addressItemInner.isValidAddressItem(p_41427_.getItemInHand())){
             addressItemInner.setAddressItem(p_41427_.getItemInHand().split(1),p_41427_.getClickedFace().get3DDataValue());
@@ -96,12 +99,13 @@ public class AddressItem extends Item {
         return true;
     }
 
-    public static boolean putEntityAddress(ItemStack itemStack, UUID entityID, Component customName){
+    public static boolean putEntityAddress(ItemStack itemStack, UUID entityID, Component customName,boolean isPlayer){
         CompoundTag tag = itemStack.getOrCreateTag();
         if(!canPutAddress(tag)) return false;
         tag.putUUID(ADDRESS_ENTITY_ID,entityID);
         tag.putString(ADDRESS_ENTITY_CUSTOM_NAME,customName.getString());
         tag.putInt(ADDRESS_ITEM_COLOR,Proxys.getRGBFromUUID(entityID));
+        tag.putBoolean(IS_PLAYER,isPlayer);
         return true;
     }
     public static boolean canPutAddress(CompoundTag tag){

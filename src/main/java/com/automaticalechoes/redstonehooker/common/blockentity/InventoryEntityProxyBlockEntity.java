@@ -107,6 +107,7 @@ public class InventoryEntityProxyBlockEntity extends DataBlockEntity implements 
         }
         if(itemStack.isEmpty()) return;
         setAddressItem(itemStack);
+        blockChange();
         setChanged();
     }
 
@@ -155,23 +156,12 @@ public class InventoryEntityProxyBlockEntity extends DataBlockEntity implements 
     }
 
     public void tick(Level level ,BlockPos pos ,BlockState state){
-        if(!(level instanceof ServerLevel serverLevel)) return;
+        if(level.isClientSide) return;
         boolean isProxyNull = getAddressItem(0).isEmpty() || proxyTarget == null || !(proxyTarget instanceof Entity entity) || !entity.isAlive();
         if(isProxyNull){
             proxyTarget = null;
             setProxyTargetID(0);
-            if(this.getAddressItem(0).isEmpty()){
-                setError(0);
-            }else if(getAddress(0) == null){
-                setError(1);
-            }else if(serverLevel.getEntity(getAddress(0)) instanceof InventoryCarrier inventoryCarrier){
-                Entity entity = serverLevel.getEntity(getAddress(0));
-                this.proxyTarget = inventoryCarrier;
-                setProxyTargetID(entity.getId());
-            }else{
-                setError(4);
-            }
-
+            blockChange();
         }
 
         if(this.blockEntityData.isDirty()){
@@ -200,6 +190,22 @@ public class InventoryEntityProxyBlockEntity extends DataBlockEntity implements 
 
     public Integer ErrorType(){
         return this.blockEntityData.get(ERROR_TYPE);
+    }
+
+    public void blockChange(){
+        if(!(this.level instanceof ServerLevel serverLevel)) return;
+        if(this.getAddressItem(0).isEmpty()){
+            setError(0);
+        }else if(getAddress(0) == null){
+            setError(1);
+        }else if(serverLevel.getEntity(getAddress(0)) instanceof InventoryCarrier inventoryCarrier){
+            setError(0);
+            Entity entity = serverLevel.getEntity(getAddress(0));
+            this.proxyTarget = inventoryCarrier;
+            setProxyTargetID(entity.getId());
+        }else{
+            setError(4);
+        }
     }
 
     @Override

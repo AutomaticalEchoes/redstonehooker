@@ -41,7 +41,7 @@ public class AddressNameTagItem extends NameTagItem {
     public ItemStack finishUsingItem(ItemStack p_41409_, Level p_41410_, LivingEntity p_41411_) {
         if(p_41411_ instanceof ServerPlayer player && p_41409_.getHoverName().getString().equals("self")){
             ItemStack defaultInstance = ItemRegister.ADDRESS_ITEM.get().getDefaultInstance();
-            AddressItem.putEntityAddress(defaultInstance,p_41411_.getUUID(),player.getName());
+            AddressItem.putEntityAddress(defaultInstance,p_41411_.getUUID(),player.getName(),true);
             return defaultInstance;
         }
         return p_41409_;
@@ -57,8 +57,9 @@ public class AddressNameTagItem extends NameTagItem {
 
                 p_42954_.shrink(1);
                 ItemStack defaultInstance = ItemRegister.ADDRESS_ITEM.get().getDefaultInstance();
-                AddressItem.putEntityAddress(defaultInstance,p_42956_.getUUID(),p_42954_.getHoverName());
-                Containers.dropItemStack(p_42955_.level(),p_42956_.getX(),p_42956_.getY(),p_42956_.getZ(),defaultInstance);
+                AddressItem.putEntityAddress(defaultInstance,p_42956_.getUUID(),p_42954_.getHoverName(),false);
+                p_42955_.setItemInHand(p_42957_,defaultInstance);
+//                Containers.dropItemStack(p_42955_.level(),p_42956_.getX(),p_42956_.getY(),p_42956_.getZ(),defaultInstance);
             }
 
             return InteractionResult.sidedSuccess(p_42955_.level().isClientSide);

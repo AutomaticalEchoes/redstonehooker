@@ -1,8 +1,8 @@
 {
 
   "item.redstonehooker.hooker_adjust_item": "调节器",
-  "item.redstonehooker.address_item": "地址标签：方块",
-  "item.redstonehooker.address_name_tag_item": "地址标签：实体",
+  "item.redstonehooker.address_item": "标签",
+  "item.redstonehooker.address_name_tag_item": "命名标签",
 
   "block.redstonehooker.container_proxy_block": "方块实体容器代理箱",
   "block.redstonehooker.anisotropic_signal_block": "信号监听器",

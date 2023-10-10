@@ -12,6 +12,7 @@ public interface AddressItemInner<T> {
     String ADDRESS_ENTITY_ID = "address_entity_id";
     String ADDRESS_ENTITY_CUSTOM_NAME = "address_entity_custom_name";
     String ADDRESS_ITEM_COLOR = "address_item_color";
+    String IS_PLAYER = "is_player";
     void updateAddressItem(ItemStack itemStack,int num);
 
     boolean isValidAddressItem(ItemStack itemStack);

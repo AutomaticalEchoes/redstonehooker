@@ -80,7 +80,7 @@ public class ContainerProxyBlockEntity extends DataBlockEntity implements Addres
 
     @Override
     public void updateAddressItem(ItemStack itemStack, int num) {
-        if(proxyTarget != null){
+        if(!getAddressItem(0).isEmpty()){
             reset();
         }
         if(itemStack.isEmpty()) return;
@@ -107,6 +107,7 @@ public class ContainerProxyBlockEntity extends DataBlockEntity implements Addres
         }
 
         this.proxyTarget = vanillaBlockEntity;
+        setError(0);
         if(level instanceof ServerLevel serverLevel){
             serverLevel.getPoiManager().getType(proxyTargetPos)
                     .ifPresent(poiTypeHolder -> serverLevel.getPoiManager().add(pos, poiTypeHolder));
