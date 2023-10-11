@@ -8,12 +8,17 @@ import com.automaticalechoes.redstonehooker.client.render.ContainerProxyBlockEnt
 import com.automaticalechoes.redstonehooker.common.item.AddressItem;
 import com.automaticalechoes.redstonehooker.register.BlockEntityRegister;
 import com.automaticalechoes.redstonehooker.register.ItemRegister;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.color.item.ItemColor;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -44,4 +49,6 @@ public class ClientModEvents {
     public static void RegisterItemColor(RegisterColorHandlersEvent.Item event){
         event.register((p_92672_, p_92673_) -> p_92673_ > 0 ? -1 : AddressItem.getColor(p_92672_), ItemRegister.ADDRESS_ITEM.get());
     }
+
+
 }

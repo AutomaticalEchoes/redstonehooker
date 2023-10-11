@@ -1,0 +1,10 @@
+{
+  "type": "redstonehooker:smithing_put_tag",
+  "base": {
+    "tag": "forge:armors/helmets"
+  },
+  "addition": {
+    "item": "redstonehooker:hooker_adjust_item"
+  },
+  "tag_name": "redstonehooker"
+}

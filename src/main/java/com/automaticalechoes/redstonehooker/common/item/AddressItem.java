@@ -67,8 +67,6 @@ public class AddressItem extends Item {
                     .append(Component.translatable("tab.type"))
                     .append(Component.translatable(s)));
         });
-
-
     }
 
     @Override
@@ -108,6 +106,7 @@ public class AddressItem extends Item {
         tag.putBoolean(IS_PLAYER,isPlayer);
         return true;
     }
+
     public static boolean canPutAddress(CompoundTag tag){
        return !(tag.contains(ADDRESS_POS) || tag.contains(ADDRESS_CODE)
                || tag.contains(ADDRESS_ENTITY_CUSTOM_NAME) || tag.contains(ADDRESS_ENTITY_ID)) ;

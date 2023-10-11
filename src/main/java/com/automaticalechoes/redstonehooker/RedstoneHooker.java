@@ -4,10 +4,13 @@ import com.automaticalechoes.redstonehooker.common.item.HookerAdjustItem;
 import com.automaticalechoes.redstonehooker.register.BlockEntityRegister;
 import com.automaticalechoes.redstonehooker.register.BlockRegister;
 import com.automaticalechoes.redstonehooker.register.ItemRegister;
+import com.automaticalechoes.redstonehooker.register.RecipeRegister;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
@@ -49,6 +52,7 @@ public class RedstoneHooker
         ItemRegister.ITEMS.register(modEventBus);
         BlockRegister.BLOCKS.register(modEventBus);
         BlockEntityRegister.BLOCK_ENTITIES.register(modEventBus);
+        RecipeRegister.RECIPES.register(modEventBus);
         CREATIVE_MODE_TABS.register(modEventBus);
 
         // Register ourselves for server and other game events we are interested in
@@ -74,7 +78,8 @@ public class RedstoneHooker
     }
 
     public static boolean ShouldShow(){
-        return Minecraft.getInstance().player.getItemInHand(InteractionHand.MAIN_HAND).getItem() instanceof HookerAdjustItem;
+        LocalPlayer player = Minecraft.getInstance().player;
+        return player.getItemInHand(InteractionHand.MAIN_HAND).getItem() instanceof HookerAdjustItem || player.getItemBySlot(EquipmentSlot.HEAD).getOrCreateTag().contains(MODID);
     }
 
 }
