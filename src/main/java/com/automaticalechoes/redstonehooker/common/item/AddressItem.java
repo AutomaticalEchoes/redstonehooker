@@ -23,6 +23,7 @@ import java.util.UUID;
 import java.util.function.Consumer;
 
 public class AddressItem extends Item {
+    public static String ADDRESS_TYPE = AddressItemInner.ADDRESS_TYPE;
     public static String ADDRESS_POS = AddressItemInner.ADDRESS_POS;
     public static String ADDRESS_CODE = AddressItemInner.ADDRESS_CODE;
     public static String ADDRESS_ENTITY_ID = AddressItemInner.ADDRESS_ENTITY_ID;
@@ -49,19 +50,23 @@ public class AddressItem extends Item {
         CompoundTag tag = p_41421_.getTag();
         if(tag == null) return;
         String message = null;
-        if(tag.contains(ADDRESS_ENTITY_ID) && tag.contains(ADDRESS_ENTITY_CUSTOM_NAME)){
-            message = "type.entity";
-//            UUID uuid = tag.getUUID(ADDRESS_ENTITY_ID);
-//            p_41423_.add(Component.translatable(uuid.toString()));
-//            String string = tag.getString(ADDRESS_ENTITY_CUSTOM_NAME);
-//            p_41423_.add(Component.translatable(string));
-        }else if(tag.contains(ADDRESS_POS) && tag.contains(ADDRESS_CODE)){
-            message = "type.block_pos";
+        if(tag.contains(ADDRESS_TYPE)) {
+            switch (tag.getInt(ADDRESS_TYPE)) {
+                case 0 -> { message = "type.block_pos";
 //            BlockPos proxyTargetPos = BlockPos.of(p_41421_.getTag().getLong(ADDRESS_POS));
 //            Direction direction = Direction.from3DDataValue(p_41421_.getTag().getInt(ADDRESS_CODE));
 //            p_41423_.add(Component.translatable(proxyTargetPos.getCenter().toString()));
 //            p_41423_.add(Component.translatable(direction.getName()));
+                }
+                case 1 -> { message = "type.entity";
+//            UUID uuid = tag.getUUID(ADDRESS_ENTITY_ID);
+//            p_41423_.add(Component.translatable(uuid.toString()));
+//            String string = tag.getString(ADDRESS_ENTITY_CUSTOM_NAME);
+//            p_41423_.add(Component.translatable(string));
+                }
+            }
         }
+
         Optional.ofNullable(message).ifPresent(s -> {
             p_41423_.add(Component.empty()
                     .append(Component.translatable("tab.type"))
@@ -75,13 +80,13 @@ public class AddressItem extends Item {
         if(tag.contains(ADDRESS_ENTITY_ID) && tag.contains(ADDRESS_ENTITY_CUSTOM_NAME)){
             String string = tag.getString(ADDRESS_ENTITY_CUSTOM_NAME);
             return Component.empty()
-                    .append(Component.translatable("tab.proxy_target"))
+                    .append(Component.translatable("tab.proxy_target").withStyle(Style.EMPTY.withColor(getTypeColor(p_41458_))))
                     .append(Component.translatable(string).withStyle(Style.EMPTY.withColor(getColor(p_41458_))));
         }else if(tag.contains(ADDRESS_POS) && tag.contains(ADDRESS_CODE)){
             BlockPos proxyTargetPos = BlockPos.of(tag.getLong(ADDRESS_POS));
             return Component.empty()
-                    .append(Component.translatable("tab.address"))
-                    .append(Component.translatable(proxyTargetPos.getCenter().toString()).withStyle(Style.EMPTY.withColor(getColor(p_41458_))));
+                    .append(Component.translatable("tab.address").withStyle(Style.EMPTY.withColor(0x371b42)))
+                    .append(Component.translatable(proxyTargetPos.getCenter().toString()).withStyle(Style.EMPTY.withColor(getTypeColor(p_41458_))));
         }else {
             return super.getName(p_41458_);
         }
@@ -94,6 +99,7 @@ public class AddressItem extends Item {
         tag.putLong(ADDRESS_POS,l);
         tag.putInt(ADDRESS_CODE,code);
         tag.putInt(ADDRESS_ITEM_COLOR,Proxys.getRGBFromBlockPos(pos));
+        tag.putInt(ADDRESS_TYPE,0);
         return true;
     }
 
@@ -104,6 +110,7 @@ public class AddressItem extends Item {
         tag.putString(ADDRESS_ENTITY_CUSTOM_NAME,customName.getString());
         tag.putInt(ADDRESS_ITEM_COLOR,Proxys.getRGBFromUUID(entityID));
         tag.putBoolean(IS_PLAYER,isPlayer);
+        tag.putInt(ADDRESS_TYPE,1);
         return true;
     }
 
@@ -118,5 +125,16 @@ public class AddressItem extends Item {
             return -1;
         }
         return tag.getInt(ADDRESS_ITEM_COLOR);
+    }
+
+    public static int getTypeColor(ItemStack itemStack){
+        CompoundTag tag = itemStack.getTag();
+        if(tag == null || !tag.contains(ADDRESS_TYPE)){
+            return  0x2e221c;
+        }
+        return switch (itemStack.getOrCreateTag().getInt(ADDRESS_TYPE)){
+            case 0 -> 0x371b42;
+            default -> 0x2e221c;
+        };
     }
 }

@@ -6,6 +6,7 @@ import net.minecraft.world.item.ItemStack;
 import javax.annotation.Nullable;
 
 public interface AddressItemInner<T> {
+    String ADDRESS_TYPE = "address_type";
     String ADDRESS_ITEM_STACK = "address_item_stack";
     String ADDRESS_CODE = "address_code";
     String ADDRESS_POS = "address_pos";

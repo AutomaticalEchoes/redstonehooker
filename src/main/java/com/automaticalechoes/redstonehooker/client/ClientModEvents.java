@@ -47,7 +47,11 @@ public class ClientModEvents {
 
     @SubscribeEvent
     public static void RegisterItemColor(RegisterColorHandlersEvent.Item event){
-        event.register((p_92672_, p_92673_) -> p_92673_ > 0 ? -1 : AddressItem.getColor(p_92672_), ItemRegister.ADDRESS_ITEM.get());
+        event.register((p_92672_, p_92673_) -> switch (p_92673_){
+            case 0 -> AddressItem.getColor(p_92672_);
+            case 1 -> AddressItem.getTypeColor(p_92672_);
+            default -> -1;
+        }, ItemRegister.ADDRESS_ITEM.get());
     }
 
 

@@ -9,6 +9,7 @@ import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.CreativeModeTab;
@@ -37,6 +38,7 @@ public class RedstoneHooker
 
     public static final RegistryObject<CreativeModeTab> REDSTONE_HOOKER = CREATIVE_MODE_TABS.register("redstone_hooker", () -> CreativeModeTab.builder()
             .withTabsBefore(CreativeModeTabs.COMBAT)
+            .title(Component.translatable("itemGroup"))
             .icon(() -> ItemRegister.HOOKER_ADJUST.get().getDefaultInstance())
             .displayItems((parameters, output) -> {
                 for (RegistryObject<? extends Item> modItem : ItemRegister.MOD_ITEMS) {
