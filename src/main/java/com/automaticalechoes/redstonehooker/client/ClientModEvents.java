@@ -51,7 +51,7 @@ public class ClientModEvents {
             case 0 -> AddressItem.getColor(p_92672_);
             case 1 -> AddressItem.getTypeColor(p_92672_);
             default -> -1;
-        }, ItemRegister.ADDRESS_ITEM.get());
+        }, ItemRegister.ADDRESS_ITEM.get(), ItemRegister.ADDRESS_NAME_TAG_ITEM.get());
     }
 
 

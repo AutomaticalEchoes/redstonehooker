@@ -80,13 +80,13 @@ public class AddressItem extends Item {
         if(tag.contains(ADDRESS_ENTITY_ID) && tag.contains(ADDRESS_ENTITY_CUSTOM_NAME)){
             String string = tag.getString(ADDRESS_ENTITY_CUSTOM_NAME);
             return Component.empty()
-                    .append(Component.translatable("tab.proxy_target").withStyle(Style.EMPTY.withColor(getTypeColor(p_41458_))))
+                    .append(Component.translatable("tab.proxy_target").withStyle(Style.EMPTY.withColor(getTypeColor(p_41458_) | 0x8F0C8F)))
                     .append(Component.translatable(string).withStyle(Style.EMPTY.withColor(getColor(p_41458_))));
         }else if(tag.contains(ADDRESS_POS) && tag.contains(ADDRESS_CODE)){
             BlockPos proxyTargetPos = BlockPos.of(tag.getLong(ADDRESS_POS));
             return Component.empty()
-                    .append(Component.translatable("tab.address").withStyle(Style.EMPTY.withColor(0x371b42)))
-                    .append(Component.translatable(proxyTargetPos.getCenter().toString()).withStyle(Style.EMPTY.withColor(getTypeColor(p_41458_))));
+                    .append(Component.translatable("tab.address").withStyle(Style.EMPTY.withColor(getTypeColor(p_41458_) | 0x8F0C8F)))
+                    .append(Component.translatable(proxyTargetPos.getCenter().toString()).withStyle(Style.EMPTY.withColor(getColor(p_41458_))));
         }else {
             return super.getName(p_41458_);
         }
