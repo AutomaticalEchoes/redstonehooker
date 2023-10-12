@@ -31,7 +31,8 @@ public abstract class LevelChunkMixin extends ChunkAccess implements ILevelChunk
         super(p_187621_, p_187622_, p_187623_, p_187624_, p_187625_, p_187626_, p_187627_);
     }
 
-    @Inject(method = "getBlockEntity*",at = {@At("RETURN")}, cancellable = true)
+//   SRG name: m_5685_(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/chunk/LevelChunk$EntityCreationType;)Lnet/minecraft/world/level/block/entity/BlockEntity;
+    @Inject(method = "getBlockEntity(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/chunk/LevelChunk$EntityCreationType;)Lnet/minecraft/world/level/block/entity/BlockEntity;",at = {@At("RETURN")}, cancellable = true)
     public void getBlockEntity(BlockPos p_62868_, LevelChunk.EntityCreationType p_62869_, CallbackInfoReturnable<BlockEntity> infoReturnable){
         if(infoReturnable.getReturnValue() instanceof ContainerProxyBlockEntity proxyBlockEntity){
             infoReturnable.setReturnValue(proxyBlockEntity.getProxyTarget());
