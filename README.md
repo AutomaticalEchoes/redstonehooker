@@ -64,6 +64,7 @@ _阅前提示：本人喜欢用<sub title="如果影响你观看就先给你道�
 **合成**  <image align="right" src="recipe/name_tag.png"/>  
 - 地址标签x1。  
 - 命名牌x1。  
+  
 合成格式：无格式要求
   
 **主手：**  
