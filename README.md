@@ -22,7 +22,7 @@ _阅前提示：本人喜欢用<span title="如果影响你观看就先给你道
 
 ## 方块与物品
 ### 调节器 HookerAdjust 
-**合成**  <image align="right" src="recipe/adjust.png"/>
+**合成**  <image align="right" src="recipe/adjust.png"/>  
 1.金锭x1。  
 2.铜锭x1。  
 3.红石粉x1。  
@@ -40,14 +40,14 @@ _阅前提示：本人喜欢用<span title="如果影响你观看就先给你道
 
 **其他：**  
 在锻造台中，可以作为素材与头盔类型装备融合，为其添加`偷盗工程师`签名。玩家穿戴含该签名的头盔时，`看破`。  
-<image align="left" src="recipe/adjust_hemlet.png"/>
+<image align="left" src="recipe/adjust_hemlet.png"/>  
 
 ### 标签/地址标签 AddressTag 
-**合成**  <image align="right" src="recipe/tag.png"/>
+**合成**  <image align="right" src="recipe/tag.png"/>  
 1.金锭x1。  
 2.铜锭x1。  
 3.红石粉x1。  
-4.青金石粉x1。
+4.青金石粉x1。  
 合成格式：无格式要求
 
   
@@ -57,22 +57,21 @@ _阅前提示：本人喜欢用<span title="如果影响你观看就先给你道
 **其他：**  
 含有地址记录时，名称优先显示记录信息。  
 ### 命名标签 AddressNameTag 
-**合成**  <image align="right" src="recipe/name_tag.png"/>
+**合成**  <image align="right" src="recipe/name_tag.png"/>  
 1.地址标签x1。  
-2.命名牌x1。
+2.命名牌x1。  
 合成格式：无格式要求
-
   
 **主手：**  
 1.对生物使用时，若标签已命名，将命名该生物，转换成`地址标签`并记录生物唯一标识<span title="生物的UUID" >**`…`**</span>。  
 特别的，如果命名为`self`,玩家右键使用持续一段时间后，会记录玩家的唯一标识，要获取其他玩家的唯一标识，必须让其自己使用。
 
 ### 方块实体容器代理箱 ContainerProxyBlock 
-**合成**  <image align="right" src="recipe/container.png"/>
+**合成**  <image align="right" src="recipe/container.png"/>  
 1.金锭x4。  
 2.铜锭x2。  
 3.红石粉x2。  
-4.末影箱x1。
+4.末影箱x1。  
 合成格式：  
 1    2    1  
 3    4    3  
@@ -85,11 +84,10 @@ _阅前提示：本人喜欢用<span title="如果影响你观看就先给你道
 启动时，代理指定坐标方块的容器。无GUI，不可查看代理容器详情。
 
 ### 实体容器代理箱 InventoryProxyBlock 
-**合成**  <image align="right" src="recipe/inventory.png"/>
+**合成**  <image align="right" src="recipe/inventory.png"/>  
 1.方块实体容器代理箱x1。  
-2.下界之星x1。
-合成格式：无格式要求
-
+2.下界之星x1。  
+合成格式：无格式要求  
 
 符合以下条件时，启动：  
 1.含有地址标签，且地址格式合法。  
