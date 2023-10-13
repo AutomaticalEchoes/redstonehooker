@@ -188,6 +188,6 @@ public class ContainerProxyBlockEntity extends DataBlockEntity implements Addres
 
     @Override
     public boolean shouldShowMessages() {
-        return RedstoneHooker.ShouldShow();
+        return RedstoneHooker.ShouldShow(this.worldPosition);
     }
 }

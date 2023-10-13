@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "redstonehooker:container_proxy_block",
+    "redstonehooker:inventory_entity_proxy_block"
+  ]
+}

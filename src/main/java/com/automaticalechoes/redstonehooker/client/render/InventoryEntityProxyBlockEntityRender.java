@@ -47,7 +47,7 @@ public class InventoryEntityProxyBlockEntityRender implements BlockEntityRendere
     public void render(InventoryEntityProxyBlockEntity p_112563_, float p_112564_, PoseStack p_112565_, MultiBufferSource p_112566_, int p_112567_, int p_112568_) {
         Minecraft instance = Minecraft.getInstance();
         Optional<Direction> facing = instance.level.getBlockState(p_112563_.getBlockPos()).getOptionalValue(InventoryEntityProxyBlock.FACING);
-        boolean flag = RedstoneHooker.ShouldShow();
+        boolean flag = p_112563_.shouldShowMessages();
         boolean active = p_112563_.getProxyTargetID() != null
                 && instance.level.getEntity(p_112563_.getProxyTargetID()) != null
                 && instance.level.getEntity(p_112563_.getProxyTargetID()).isAlive();

@@ -8,6 +8,7 @@ import com.automaticalechoes.redstonehooker.register.RecipeRegister;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
@@ -79,9 +80,11 @@ public class RedstoneHooker
         LOGGER.info("HELLO from server starting");
     }
 
-    public static boolean ShouldShow(){
+    public static boolean ShouldShow(BlockPos pos){
         LocalPlayer player = Minecraft.getInstance().player;
-        return player.getItemInHand(InteractionHand.MAIN_HAND).getItem() instanceof HookerAdjustItem || player.getItemBySlot(EquipmentSlot.HEAD).getOrCreateTag().contains(MODID);
+        double dr = player.distanceToSqr(pos.getCenter());
+
+        return dr < 15.0D && (player.getItemInHand(InteractionHand.MAIN_HAND).getItem() instanceof HookerAdjustItem || player.getItemBySlot(EquipmentSlot.HEAD).getOrCreateTag().contains(MODID));
     }
 
 }

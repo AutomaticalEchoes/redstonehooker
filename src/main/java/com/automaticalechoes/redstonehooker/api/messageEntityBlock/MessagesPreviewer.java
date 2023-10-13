@@ -20,15 +20,15 @@ public class MessagesPreviewer {
     private static final Font font = Minecraft.getInstance().font;
 
     public static void RenderEachClickFace(MessagesPreviewable p_112307_, float p_112308_, PoseStack p_112309_, MultiBufferSource p_112310_, int p_112311_, int p_112312_) {
-        if(p_112307_.shouldShowMessages()) renderSingleFace(p_112307_,p_112308_,p_112309_,p_112310_,ClickFace(),p_112311_,p_112312_);
+         renderSingleFace(p_112307_,p_112308_,p_112309_,p_112310_,ClickFace(),p_112311_,p_112312_);
     }
 
     public static void RenderOnClickFace(MessagesPreviewable p_112307_, float p_112308_, PoseStack p_112309_, MultiBufferSource p_112310_, int p_112311_, int p_112312_,Direction direction){
-        if(p_112307_.shouldShowMessages() && ClickFace() ==  direction) renderSingleFace(p_112307_,p_112308_,p_112309_,p_112310_,direction,p_112311_,p_112312_);
+        if(ClickFace() ==  direction) renderSingleFace(p_112307_,p_112308_,p_112309_,p_112310_,direction,p_112311_,p_112312_);
     }
 
     public static void RenderOnFace(MessagesPreviewable p_112307_, float p_112308_, PoseStack p_112309_, MultiBufferSource p_112310_, int p_112311_, int p_112312_,Direction direction){
-        if(p_112307_.shouldShowMessages()) renderSingleFace(p_112307_,p_112308_,p_112309_,p_112310_,direction,p_112311_,p_112312_);
+        renderSingleFace(p_112307_,p_112308_,p_112309_,p_112310_,direction,p_112311_,p_112312_);
     }
 
     public static void renderSingleFace(MessagesPreviewable p_112307_, float p_112308_, PoseStack p_112309_, MultiBufferSource p_112310_, Direction face, int p_112311_, int p_112312_){

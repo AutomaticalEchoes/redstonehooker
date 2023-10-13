@@ -230,6 +230,6 @@ public class InventoryEntityProxyBlockEntity extends DataBlockEntity implements 
 
     @Override
     public boolean shouldShowMessages() {
-        return RedstoneHooker.ShouldShow();
+        return RedstoneHooker.ShouldShow(this.worldPosition);
     }
 }

@@ -21,6 +21,7 @@ public class BlockRegister {
     public static final RegistryObject<ContainerProxyBlock> CONTAINER_PROXY_BLOCK  = BLOCKS.register("container_proxy_block",() -> new ContainerProxyBlock(BlockBehaviour
             .Properties.of()
             .lightLevel(value -> 7)
+            .strength(2.5F)
             .noOcclusion()
             .sound(SoundType.WOOD)
             .isViewBlocking(BlockRegister::never)));
@@ -36,6 +37,7 @@ public class BlockRegister {
     public static final RegistryObject<InventoryEntityProxyBlock> INVENTORY_ENTITY_PROXY_BLOCK  = BLOCKS.register("inventory_entity_proxy_block",() -> new InventoryEntityProxyBlock(BlockBehaviour
             .Properties.of()
             .isRedstoneConductor(BlockRegister::never)
+            .strength(2.5F)
             .noOcclusion()
             .sound(SoundType.WOOD)
             .isViewBlocking(BlockRegister::never)));

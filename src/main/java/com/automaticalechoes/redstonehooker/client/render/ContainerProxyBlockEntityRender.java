@@ -59,7 +59,7 @@ public class ContainerProxyBlockEntityRender implements BlockEntityRenderer<Cont
         BlockPos pos = p_112399_.getAddress(0);
         Optional<Direction> facing = level.getBlockState(p_112399_.getBlockPos()).getOptionalValue(ContainerProxyBlock.FACING);
 
-        boolean flag = RedstoneHooker.ShouldShow();
+        boolean flag = p_112399_.shouldShowMessages();
         boolean active = pos != null && level.getBlockEntity(pos) != null && !(Proxys.getVanillaBlockEntity(level,pos) instanceof ContainerProxyBlockEntity);
         p_112401_.pushPose();
         facing.ifPresent((face) -> {
