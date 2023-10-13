@@ -2,6 +2,7 @@ package com.automaticalechoes.redstonehooker.client.render;
 
 import com.automaticalechoes.redstonehooker.RedstoneHooker;
 import com.automaticalechoes.redstonehooker.api.fakeBlock.FakeBlock;
+import com.automaticalechoes.redstonehooker.api.hooker.Proxys;
 import com.automaticalechoes.redstonehooker.api.messageEntityBlock.MessagesPreviewer;
 import com.automaticalechoes.redstonehooker.client.model.FakeChestModel;
 import com.automaticalechoes.redstonehooker.common.block.ContainerProxyBlock;
@@ -59,7 +60,7 @@ public class ContainerProxyBlockEntityRender implements BlockEntityRenderer<Cont
         Optional<Direction> facing = level.getBlockState(p_112399_.getBlockPos()).getOptionalValue(ContainerProxyBlock.FACING);
 
         boolean flag = RedstoneHooker.ShouldShow();
-        boolean active = pos != null && level.getBlockEntity(pos) != null;
+        boolean active = pos != null && level.getBlockEntity(pos) != null && !(Proxys.getVanillaBlockEntity(level,pos) instanceof ContainerProxyBlockEntity);
         p_112401_.pushPose();
         facing.ifPresent((face) -> {
             p_112401_.translate(0.5,0,0.5);
