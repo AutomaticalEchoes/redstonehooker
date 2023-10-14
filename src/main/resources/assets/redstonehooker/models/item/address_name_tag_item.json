@@ -1,7 +1,7 @@
 {
 	"parent": "minecraft:item/generated",
 	"textures": {
-		"layer0": "redstonehooker:item/address",
+		"layer0": "redstonehooker:item/address_name_tag",
 		"layer1": "redstonehooker:item/address_inner",
 		"layer2": "redstonehooker:item/address_border"
 	}
