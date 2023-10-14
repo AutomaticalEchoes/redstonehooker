@@ -84,7 +84,7 @@ public class RedstoneHooker
         LocalPlayer player = Minecraft.getInstance().player;
         double dr = player.distanceToSqr(pos.getCenter());
 
-        return dr < 15.0D && (player.getItemInHand(InteractionHand.MAIN_HAND).getItem() instanceof HookerAdjustItem || player.getItemBySlot(EquipmentSlot.HEAD).getOrCreateTag().contains(MODID));
+        return dr < 225.0D && (player.getItemInHand(InteractionHand.MAIN_HAND).getItem() instanceof HookerAdjustItem || player.getItemBySlot(EquipmentSlot.HEAD).getOrCreateTag().contains(MODID));
     }
 
 }
