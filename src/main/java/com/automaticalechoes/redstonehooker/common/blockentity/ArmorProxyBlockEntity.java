@@ -16,25 +16,29 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Container;
+import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.Containers;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.npc.InventoryCarrier;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.TheEndGatewayBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nullable;
 import java.util.UUID;
 
-public class InventoryEntityProxyBlockEntity extends DataBlockEntity implements Container , MessagesPreviewable, AddressItemInner<UUID> {
-    private static final EntityDataAccessor<ItemStack> ADDRESS_ITEM = SynchedBlockEntityData.defineId(InventoryEntityProxyBlockEntity.class, EntityDataSerializers.ITEM_STACK);
-    private static final EntityDataAccessor<Integer> ENTITY_ID = SynchedBlockEntityData.defineId(InventoryEntityProxyBlockEntity.class,EntityDataSerializers.INT);
-    private static final EntityDataAccessor<Integer> ERROR_TYPE =  SynchedBlockEntityData.defineId(InventoryEntityProxyBlockEntity.class,EntityDataSerializers.INT);
+public class ArmorProxyBlockEntity extends DataBlockEntity implements Container , MessagesPreviewable, AddressItemInner<UUID> {
+    private static final EntityDataAccessor<ItemStack> ADDRESS_ITEM = SynchedBlockEntityData.defineId(ArmorProxyBlockEntity.class, EntityDataSerializers.ITEM_STACK);
+    private static final EntityDataAccessor<Integer> ENTITY_ID = SynchedBlockEntityData.defineId(ArmorProxyBlockEntity.class,EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> ERROR_TYPE =  SynchedBlockEntityData.defineId(ArmorProxyBlockEntity.class,EntityDataSerializers.INT);
     @Nullable
-    private InventoryCarrier proxyTarget = null;
-    public InventoryEntityProxyBlockEntity(BlockPos p_155630_, BlockState p_155631_) {
-        super(BlockEntityRegister.INVENTORY_ENTITY_PROXY_BLOCK_ENTITY.get(), p_155630_, p_155631_);
+    private LivingEntity proxyTarget = null;
+    public ArmorProxyBlockEntity(BlockPos p_155630_, BlockState p_155631_) {
+        super(BlockEntityRegister.ARMOR_PROXY_BLOCK_ENTITY.get(), p_155630_, p_155631_);
     }
 
     @Override
@@ -62,37 +66,50 @@ public class InventoryEntityProxyBlockEntity extends DataBlockEntity implements 
 
     @Override
     public int getContainerSize() {
-        return proxyTarget != null? proxyTarget.getInventory().getContainerSize() : 0;
+        return proxyTarget != null? 4 : 0;
     }
 
     @Override
     public boolean isEmpty() {
-        return proxyTarget != null && proxyTarget.getInventory().isEmpty();
+        if(proxyTarget == null) return false;
+        for (ItemStack armorSlot : proxyTarget.getArmorSlots()) {
+            if(!armorSlot.isEmpty()) return false;
+        }
+        return true;
     }
 
     @Override
     public ItemStack getItem(int p_18941_) {
-        return proxyTarget.getInventory().getItem(p_18941_);
+        if(p_18941_ < 0 || p_18941_ > 4) return ItemStack.EMPTY;
+        return proxyTarget.getItemBySlot(EquipmentSlot.byTypeAndIndex(EquipmentSlot.Type.ARMOR,p_18941_));
     }
 
     @Override
     public ItemStack removeItem(int p_18942_, int p_18943_) {
-        return proxyTarget.getInventory().removeItem(p_18942_,p_18943_);
+        if(p_18942_ < 0 || p_18942_ > 4 || p_18943_ ==0 ) return ItemStack.EMPTY;
+        return proxyTarget.getItemBySlot(EquipmentSlot.byTypeAndIndex(EquipmentSlot.Type.ARMOR,p_18942_)).split(1);
+    }
+
+    @Override
+    public boolean canPlaceItem(int p_18952_, ItemStack p_18953_) {
+        if(p_18952_ < 0 || p_18952_ > 4) return false;
+        EquipmentSlot equipmentSlot = Mob.getEquipmentSlotForItem(p_18953_);
+        return equipmentSlot.getType() == EquipmentSlot.Type.ARMOR && equipmentSlot.getIndex() == p_18952_ && proxyTarget.getItemBySlot(equipmentSlot).isEmpty();
     }
 
     @Override
     public ItemStack removeItemNoUpdate(int p_18951_) {
-        return proxyTarget.getInventory().removeItemNoUpdate(p_18951_);
+        return removeItem(p_18951_,1);
     }
 
     @Override
     public void setItem(int p_18944_, ItemStack p_18945_) {
-        proxyTarget.getInventory().setItem(p_18944_,p_18945_);
+        proxyTarget.setItemSlot(EquipmentSlot.byTypeAndIndex(EquipmentSlot.Type.ARMOR,p_18944_),p_18945_);
     }
 
     @Override
     public boolean stillValid(Player p_18946_) {
-        return proxyTarget != null && proxyTarget.getInventory().stillValid(p_18946_);
+        return proxyTarget != null;
     }
 
     @Override
@@ -157,7 +174,7 @@ public class InventoryEntityProxyBlockEntity extends DataBlockEntity implements 
 
     public void tick(Level level ,BlockPos pos ,BlockState state){
         if(level.isClientSide) return;
-        boolean isProxyNull = getAddressItem(0).isEmpty() || proxyTarget == null || !(proxyTarget instanceof Entity entity) || !entity.isAlive();
+        boolean isProxyNull = getAddressItem(0).isEmpty() || proxyTarget == null || !proxyTarget.isAlive();
         if(isProxyNull){
             proxyTarget = null;
             setProxyTargetID(0);
@@ -198,11 +215,10 @@ public class InventoryEntityProxyBlockEntity extends DataBlockEntity implements 
             setError(0);
         }else if(getAddress(0) == null){
             setError(1);
-        }else if(serverLevel.getEntity(getAddress(0)) instanceof InventoryCarrier inventoryCarrier){
+        }else if(serverLevel.getEntity(getAddress(0)) instanceof LivingEntity livingEntity && livingEntity.isAlive()){
             setError(0);
-            Entity entity = serverLevel.getEntity(getAddress(0));
-            this.proxyTarget = inventoryCarrier;
-            setProxyTargetID(entity.getId());
+            this.proxyTarget = livingEntity;
+            setProxyTargetID(livingEntity.getId());
         }else{
             setError(4);
         }

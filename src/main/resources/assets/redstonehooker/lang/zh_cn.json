@@ -2,11 +2,11 @@
   "itemGroup": "偷盗工程师",
   "redstonehooker": "偷盗工程师",
 
-  "item.redstonehooker.hooker_adjust_item": "调节器",
+  "item.redstonehooker.hooker_tag_item": "调节器",
   "item.redstonehooker.address_item": "标签",
   "item.redstonehooker.address_name_tag_item": "命名标签",
 
-  "block.redstonehooker.container_proxy_block": "方块实体容器代理箱",
+  "block.redstonehooker.block_entity_proxy_block": "方块实体容器代理箱",
   "block.redstonehooker.anisotropic_signal_block": "信号监听器",
   "block.redstonehooker.inventory_entity_proxy_block": "生物实体容器代理箱",
 

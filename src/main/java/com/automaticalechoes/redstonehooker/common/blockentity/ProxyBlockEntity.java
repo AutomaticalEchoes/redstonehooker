@@ -8,7 +8,6 @@ import com.automaticalechoes.redstonehooker.api.hooker.Proxys;
 import com.automaticalechoes.redstonehooker.api.messageEntityBlock.MessagesPreviewable;
 import com.automaticalechoes.redstonehooker.common.item.AddressItem;
 import com.automaticalechoes.redstonehooker.register.BlockEntityRegister;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -16,22 +15,22 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.Containers;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.TheEndGatewayBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nullable;
 
-public class ContainerProxyBlockEntity extends DataBlockEntity implements AddressItemInner<BlockPos> , MessagesPreviewable {
-    private static final EntityDataAccessor<ItemStack> ADDRESS_ITEM = SynchedBlockEntityData.defineId(ContainerProxyBlockEntity.class, EntityDataSerializers.ITEM_STACK);
-    private static final EntityDataAccessor<Integer> ERROR_TYPE =  SynchedBlockEntityData.defineId(ContainerProxyBlockEntity.class,EntityDataSerializers.INT);
+public class ProxyBlockEntity extends DataBlockEntity implements AddressItemInner<BlockPos> , MessagesPreviewable {
+    private static final EntityDataAccessor<ItemStack> ADDRESS_ITEM = SynchedBlockEntityData.defineId(ProxyBlockEntity.class, EntityDataSerializers.ITEM_STACK);
+    private static final EntityDataAccessor<Integer> ERROR_TYPE =  SynchedBlockEntityData.defineId(ProxyBlockEntity.class,EntityDataSerializers.INT);
     @Nullable private BlockPos proxyTargetPos;
     @Nullable private BlockEntity proxyTarget = null;
-    public ContainerProxyBlockEntity(BlockPos p_155229_, BlockState p_155230_) {
-        super(BlockEntityRegister.CONTAINER_PROXY_BLOCK_ENTITY.get(), p_155229_, p_155230_);
+    public ProxyBlockEntity(BlockPos p_155229_, BlockState p_155230_) {
+        super(BlockEntityRegister.BLOCK_ENTITY_PROXY_BLOCK_ENTITY.get(), p_155229_, p_155230_);
     }
 
     @Override
@@ -101,7 +100,7 @@ public class ContainerProxyBlockEntity extends DataBlockEntity implements Addres
         if(vanillaBlockEntity == null){
             setError(2);
             return;
-        }else if(vanillaBlockEntity instanceof ContainerProxyBlockEntity){
+        }else if(vanillaBlockEntity instanceof ProxyBlockEntity){
             setError(3);
             return;
         }

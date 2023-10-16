@@ -5,6 +5,7 @@ import com.automaticalechoes.redstonehooker.api.fakeBlock.FakeBlock;
 import com.automaticalechoes.redstonehooker.api.messageEntityBlock.MessagesPreviewer;
 import com.automaticalechoes.redstonehooker.client.model.FakeChestModel;
 import com.automaticalechoes.redstonehooker.common.block.InventoryEntityProxyBlock;
+import com.automaticalechoes.redstonehooker.common.blockentity.ArmorProxyBlockEntity;
 import com.automaticalechoes.redstonehooker.common.blockentity.InventoryEntityProxyBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -28,7 +29,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import java.util.Optional;
 
 @OnlyIn(Dist.CLIENT)
-public class InventoryEntityProxyBlockEntityRender implements BlockEntityRenderer<InventoryEntityProxyBlockEntity> , FakeBlock {
+public class ArmorProxyBlockEntityRender implements BlockEntityRenderer<ArmorProxyBlockEntity> , FakeBlock {
     public static final ResourceLocation BORDER_LOCATION = new ResourceLocation(RedstoneHooker.MODID ,"textures/block/inventory_proxy_border.png");
     public static final ResourceLocation ACTIVE_LOCATION = new ResourceLocation(RedstoneHooker.MODID ,"textures/block/inventory_proxy_active.png");
     public static final ResourceLocation NORMAL = new ResourceLocation(RedstoneHooker.MODID,"textures/block/proxy_normal.png");
@@ -36,14 +37,14 @@ public class InventoryEntityProxyBlockEntityRender implements BlockEntityRendere
     private final ItemRenderer itemRenderer;
     private final ModelPart fakeBlock;
 
-    public InventoryEntityProxyBlockEntityRender(BlockEntityRendererProvider.Context context) {
+    public ArmorProxyBlockEntityRender(BlockEntityRendererProvider.Context context) {
         this.entityRenderDispatcher = context.getEntityRenderer();
         this.itemRenderer = context.getItemRenderer();
         this.fakeBlock = context.bakeLayer(FakeChestModel.FAKE_CHEST);
     }
 
     @Override
-    public void render(InventoryEntityProxyBlockEntity p_112563_, float p_112564_, PoseStack p_112565_, MultiBufferSource p_112566_, int p_112567_, int p_112568_) {
+    public void render(ArmorProxyBlockEntity p_112563_, float p_112564_, PoseStack p_112565_, MultiBufferSource p_112566_, int p_112567_, int p_112568_) {
         Minecraft instance = Minecraft.getInstance();
         Optional<Direction> facing = instance.level.getBlockState(p_112563_.getBlockPos()).getOptionalValue(InventoryEntityProxyBlock.FACING);
         boolean flag = p_112563_.shouldShowMessages();

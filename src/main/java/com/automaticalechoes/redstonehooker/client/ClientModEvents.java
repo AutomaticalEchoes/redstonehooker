@@ -3,22 +3,17 @@ package com.automaticalechoes.redstonehooker.client;
 import com.automaticalechoes.redstonehooker.RedstoneHooker;
 import com.automaticalechoes.redstonehooker.api.fakeBlock.FakeBlock;
 import com.automaticalechoes.redstonehooker.client.model.FakeChestModel;
-import com.automaticalechoes.redstonehooker.client.render.InventoryEntityProxyBlockEntityRender;
-import com.automaticalechoes.redstonehooker.client.render.ContainerProxyBlockEntityRender;
+import com.automaticalechoes.redstonehooker.client.render.*;
+import com.automaticalechoes.redstonehooker.common.entity.AddressTagProjectile;
 import com.automaticalechoes.redstonehooker.common.item.AddressItem;
 import com.automaticalechoes.redstonehooker.register.BlockEntityRegister;
+import com.automaticalechoes.redstonehooker.register.EntityRegister;
 import com.automaticalechoes.redstonehooker.register.ItemRegister;
-import net.minecraft.ChatFormatting;
-import net.minecraft.client.color.item.ItemColor;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.Style;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.client.renderer.entity.EntityRenderer;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
-import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -37,12 +32,17 @@ public class ClientModEvents {
     public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(FakeBlock.FAKE_BLOCK,FakeBlock::createBlockLayer);
         event.registerLayerDefinition(FakeChestModel.FAKE_CHEST,FakeChestModel::createBodyLayer);
+
     }
 
     @SubscribeEvent
     public static void RegisterRenders(EntityRenderersEvent.RegisterRenderers event){
-        event.registerBlockEntityRenderer(BlockEntityRegister.CONTAINER_PROXY_BLOCK_ENTITY.get(), ContainerProxyBlockEntityRender::new);
+        event.registerEntityRenderer(EntityRegister.ADDRESS_TAG_PROJECTILE.get(), AddressTagRender::new);
+
+        event.registerBlockEntityRenderer(BlockEntityRegister.GATEWAY_PROXY_BLOCK_ENTITY.get(), GatewayProxyBlockEntityRender::new);
+        event.registerBlockEntityRenderer(BlockEntityRegister.BLOCK_ENTITY_PROXY_BLOCK_ENTITY.get(), ProxyBlockEntityRender::new);
         event.registerBlockEntityRenderer(BlockEntityRegister.INVENTORY_ENTITY_PROXY_BLOCK_ENTITY.get(), InventoryEntityProxyBlockEntityRender::new);
+        event.registerBlockEntityRenderer(BlockEntityRegister.ARMOR_PROXY_BLOCK_ENTITY.get(), ArmorProxyBlockEntityRender::new);
     }
 
     @SubscribeEvent

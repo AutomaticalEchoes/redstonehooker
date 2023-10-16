@@ -5,7 +5,7 @@
       "item": "minecraft:nether_star"
     },
     {
-      "item": "redstonehooker:container_proxy_block_item"
+      "item": "redstonehooker:block_entity_proxy_block_item"
     }
   ],
   "result": {

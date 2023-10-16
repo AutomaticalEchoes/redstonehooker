@@ -1,10 +1,6 @@
 package com.automaticalechoes.redstonehooker;
 
-import com.automaticalechoes.redstonehooker.common.item.HookerAdjustItem;
-import com.automaticalechoes.redstonehooker.register.BlockEntityRegister;
-import com.automaticalechoes.redstonehooker.register.BlockRegister;
-import com.automaticalechoes.redstonehooker.register.ItemRegister;
-import com.automaticalechoes.redstonehooker.register.RecipeRegister;
+import com.automaticalechoes.redstonehooker.register.*;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
@@ -13,6 +9,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
@@ -40,7 +37,7 @@ public class RedstoneHooker
     public static final RegistryObject<CreativeModeTab> REDSTONE_HOOKER = CREATIVE_MODE_TABS.register("redstone_hooker", () -> CreativeModeTab.builder()
             .withTabsBefore(CreativeModeTabs.COMBAT)
             .title(Component.translatable("itemGroup"))
-            .icon(() -> ItemRegister.HOOKER_ADJUST.get().getDefaultInstance())
+            .icon(() -> ItemRegister.HOOKER_TAG.get().getDefaultInstance())
             .displayItems((parameters, output) -> {
                 for (RegistryObject<? extends Item> modItem : ItemRegister.MOD_ITEMS) {
                     output.accept(modItem.get()); //
@@ -54,6 +51,7 @@ public class RedstoneHooker
         // Register the commonSetup method for modloading
         ItemRegister.ITEMS.register(modEventBus);
         BlockRegister.BLOCKS.register(modEventBus);
+        EntityRegister.ENTITY_TYPES.register(modEventBus);
         BlockEntityRegister.BLOCK_ENTITIES.register(modEventBus);
         RecipeRegister.RECIPES.register(modEventBus);
         CREATIVE_MODE_TABS.register(modEventBus);
@@ -68,8 +66,8 @@ public class RedstoneHooker
     // Add the example block item to the building blocks tab
     private void addCreative(BuildCreativeModeTabContentsEvent event)
     {
-        if (event.getTabKey() == CreativeModeTabs.REDSTONE_BLOCKS)
-            event.accept(ItemRegister.CONTAINER_PROXY_BLOCK_ITEM);
+//        if (event.getTabKey() == CreativeModeTabs.REDSTONE_BLOCKS)
+//            event.accept(ItemRegister.CONTAINER_PROXY_BLOCK_ITEM);
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call
@@ -84,7 +82,18 @@ public class RedstoneHooker
         LocalPlayer player = Minecraft.getInstance().player;
         double dr = player.distanceToSqr(pos.getCenter());
 
-        return dr < 225.0D && (player.getItemInHand(InteractionHand.MAIN_HAND).getItem() instanceof HookerAdjustItem || player.getItemBySlot(EquipmentSlot.HEAD).getOrCreateTag().contains(MODID));
+        return dr < 225.0D && IsHooker(player);
+    }
+
+    public static boolean IsHooker(Player player){
+        return player.getItemInHand(InteractionHand.MAIN_HAND).getItem() == ItemRegister.HOOKER_TAG.get()
+                || player.getItemInHand(InteractionHand.OFF_HAND).getItem() == ItemRegister.HOOKER_TAG.get()
+                || player.getItemBySlot(EquipmentSlot.HEAD).getOrCreateTag().contains(MODID);
+    }
+
+    public static boolean CanInteractWithAddressInner(Player player){
+        return player.getItemInHand(InteractionHand.MAIN_HAND).getItem() == ItemRegister.HOOKER_TAG.get()
+                ||(player.getItemBySlot(EquipmentSlot.HEAD).getOrCreateTag().contains(MODID) && player.getItemInHand(InteractionHand.MAIN_HAND).isEmpty());
     }
 
 }

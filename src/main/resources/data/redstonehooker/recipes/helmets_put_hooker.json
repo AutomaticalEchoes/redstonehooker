@@ -4,7 +4,7 @@
     "tag": "forge:armors/helmets"
   },
   "addition": {
-    "item": "redstonehooker:hooker_adjust_item"
+    "item": "redstonehooker:hooker_tag_item"
   },
   "tag_name": "redstonehooker"
 }

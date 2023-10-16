@@ -1,7 +1,9 @@
 package com.automaticalechoes.redstonehooker.common.item;
 
+import com.automaticalechoes.redstonehooker.RedstoneHooker;
 import com.automaticalechoes.redstonehooker.api.addressItem.AddressItemInner;
 import com.automaticalechoes.redstonehooker.api.hooker.Proxys;
+import com.automaticalechoes.redstonehooker.common.entity.AddressTagProjectile;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -10,9 +12,9 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
@@ -22,7 +24,7 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Consumer;
 
-public class AddressItem extends Item {
+public class AddressItem extends ThrowableTag {
     public static String ADDRESS_TYPE = AddressItemInner.ADDRESS_TYPE;
     public static String ADDRESS_POS = AddressItemInner.ADDRESS_POS;
     public static String ADDRESS_CODE = AddressItemInner.ADDRESS_CODE;
@@ -36,11 +38,15 @@ public class AddressItem extends Item {
 
     @Override
     public InteractionResult useOn(UseOnContext p_41427_) {
-        if(p_41427_.getLevel() instanceof ServerLevel serverLevel
-                && p_41427_.getHand() == InteractionHand.MAIN_HAND
-                && Proxys.getVanillaBlockEntity(serverLevel,p_41427_.getClickedPos()) instanceof AddressItemInner addressItemInner
-                && addressItemInner.isValidAddressItem(p_41427_.getItemInHand())){
-            addressItemInner.setAddressItem(p_41427_.getItemInHand().split(1),p_41427_.getClickedFace().get3DDataValue());
+        if(p_41427_.getLevel() instanceof ServerLevel serverLevel && p_41427_.getHand() == InteractionHand.MAIN_HAND){
+            if(Proxys.getVanillaBlockEntity(serverLevel,p_41427_.getClickedPos()) instanceof AddressItemInner addressItemInner
+                    && addressItemInner.isValidAddressItem(p_41427_.getItemInHand())){
+                addressItemInner.setAddressItem(p_41427_.getItemInHand().split(1),p_41427_.getClickedFace().get3DDataValue());
+                return InteractionResult.CONSUME;
+            }else if(canPutAddress(p_41427_.getItemInHand().getOrCreateTag()) && RedstoneHooker.IsHooker(p_41427_.getPlayer())){
+                AddressItem.putAddress(p_41427_.getItemInHand(),  p_41427_.getClickedPos(),p_41427_.getClickedFace().getOpposite().get3DDataValue());
+                return InteractionResult.SUCCESS;
+            }
         }
         return super.useOn(p_41427_);
     }
@@ -92,7 +98,7 @@ public class AddressItem extends Item {
         }
     }
 
-    public static boolean putAddress(ItemStack itemStack, ServerLevel serverLevel , BlockPos pos, int code){
+    public static boolean putAddress(ItemStack itemStack, BlockPos pos, int code){
         CompoundTag tag = itemStack.getOrCreateTag();
         if(!canPutAddress(tag)) return false;
         long l = pos.asLong();

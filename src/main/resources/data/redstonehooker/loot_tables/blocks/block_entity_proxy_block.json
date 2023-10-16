@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "redstonehooker:container_proxy_block_item",
+          "name": "redstonehooker:block_entity_proxy_block_item",
           "functions": [
             {
               "function": "minecraft:copy_name",

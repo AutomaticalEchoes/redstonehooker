@@ -1,7 +1,6 @@
 package com.automaticalechoes.redstonehooker.common.netWork;
 
 import com.automaticalechoes.redstonehooker.RedstoneHooker;
-import com.automaticalechoes.redstonehooker.common.netWork.packet.AdjustEntity;
 import com.automaticalechoes.redstonehooker.common.netWork.packet.BlockEntityDataChange;
 import com.automaticalechoes.redstonehooker.common.netWork.packet.ClientBlockEntityCreate;
 import net.minecraft.resources.ResourceLocation;
@@ -17,11 +16,6 @@ public class PacketHandler {
                 .serverAcceptedVersions(version -> true)
                 .networkProtocolVersion(()->PROTOCOL_VERSION)
                 .simpleChannel();
-        INSTANCE.messageBuilder(AdjustEntity.class,1)
-                .encoder(AdjustEntity::encode)
-                .decoder(AdjustEntity::decode)
-                .consumerMainThread(AdjustEntity::onMessage)
-                .add();
         INSTANCE.messageBuilder(BlockEntityDataChange.class,2)
                 .encoder(BlockEntityDataChange::encode)
                 .decoder(BlockEntityDataChange::decode)

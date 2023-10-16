@@ -2,7 +2,7 @@ package com.automaticalechoes.redstonehooker.mixin;
 
 import com.automaticalechoes.redstonehooker.api.hooker.AddressListenerManager;
 import com.automaticalechoes.redstonehooker.api.hooker.ILevelChunk;
-import com.automaticalechoes.redstonehooker.common.blockentity.ContainerProxyBlockEntity;
+import com.automaticalechoes.redstonehooker.common.blockentity.ProxyBlockEntity;
 import com.automaticalechoes.redstonehooker.event.server.OnListenPosChange;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
@@ -34,7 +34,7 @@ public abstract class LevelChunkMixin extends ChunkAccess implements ILevelChunk
 //   SRG name: m_5685_(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/chunk/LevelChunk$EntityCreationType;)Lnet/minecraft/world/level/block/entity/BlockEntity;
     @Inject(method = "getBlockEntity(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/chunk/LevelChunk$EntityCreationType;)Lnet/minecraft/world/level/block/entity/BlockEntity;",at = {@At("RETURN")}, cancellable = true)
     public void getBlockEntity(BlockPos p_62868_, LevelChunk.EntityCreationType p_62869_, CallbackInfoReturnable<BlockEntity> infoReturnable){
-        if(infoReturnable.getReturnValue() instanceof ContainerProxyBlockEntity proxyBlockEntity){
+        if(infoReturnable.getReturnValue() instanceof ProxyBlockEntity proxyBlockEntity){
             infoReturnable.setReturnValue(proxyBlockEntity.getProxyTarget());
         }
     }
