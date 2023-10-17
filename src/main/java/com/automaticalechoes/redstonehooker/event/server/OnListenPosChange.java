@@ -1,7 +1,7 @@
 package com.automaticalechoes.redstonehooker.event.server;
 
 import com.automaticalechoes.redstonehooker.api.hooker.AddressListenerManager;
-import com.automaticalechoes.redstonehooker.common.blockentity.AnisotropicSignalBlockEntity;
+import com.automaticalechoes.redstonehooker.common.blockentity.BlockPosProxy.AnisotropicSignalBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraftforge.eventbus.api.Event;
 

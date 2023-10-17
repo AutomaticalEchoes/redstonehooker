@@ -18,23 +18,26 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Container;
 import net.minecraft.world.Containers;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.npc.InventoryCarrier;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nullable;
 import java.util.UUID;
 
-public class InventoryEntityProxyBlockEntity extends DataBlockEntity implements Container , MessagesPreviewable, AddressItemInner<UUID> {
-    private static final EntityDataAccessor<ItemStack> ADDRESS_ITEM = SynchedBlockEntityData.defineId(InventoryEntityProxyBlockEntity.class, EntityDataSerializers.ITEM_STACK);
-    private static final EntityDataAccessor<Integer> ENTITY_ID = SynchedBlockEntityData.defineId(InventoryEntityProxyBlockEntity.class,EntityDataSerializers.INT);
-    private static final EntityDataAccessor<Integer> ERROR_TYPE =  SynchedBlockEntityData.defineId(InventoryEntityProxyBlockEntity.class,EntityDataSerializers.INT);
+public abstract class UUIDProxyBlockEntity<T> extends DataBlockEntity implements MessagesPreviewable, AddressItemInner<UUID> {
+    private static final EntityDataAccessor<ItemStack> ADDRESS_ITEM = SynchedBlockEntityData.defineId(UUIDProxyBlockEntity.class, EntityDataSerializers.ITEM_STACK);
+    private static final EntityDataAccessor<Integer> ENTITY_ID = SynchedBlockEntityData.defineId(UUIDProxyBlockEntity.class,EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> ERROR_TYPE =  SynchedBlockEntityData.defineId(UUIDProxyBlockEntity.class,EntityDataSerializers.INT);
     @Nullable
-    private InventoryCarrier proxyTarget = null;
-    public InventoryEntityProxyBlockEntity(BlockPos p_155630_, BlockState p_155631_) {
-        super(BlockEntityRegister.INVENTORY_ENTITY_PROXY_BLOCK_ENTITY.get(), p_155630_, p_155631_);
+    protected T proxyTarget = null;
+    public UUIDProxyBlockEntity(BlockEntityType<?> blockEntityType, BlockPos p_155630_, BlockState p_155631_) {
+        super(blockEntityType, p_155630_, p_155631_);
     }
 
     @Override
@@ -58,46 +61,6 @@ public class InventoryEntityProxyBlockEntity extends DataBlockEntity implements 
         if(!this.getAddressItem(0).isEmpty()) {
             p_187471_.put(ADDRESS_ITEM_STACK,getAddressItem(0).save(new CompoundTag()));
         }
-    }
-
-    @Override
-    public int getContainerSize() {
-        return proxyTarget != null? proxyTarget.getInventory().getContainerSize() : 0;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return proxyTarget != null && proxyTarget.getInventory().isEmpty();
-    }
-
-    @Override
-    public ItemStack getItem(int p_18941_) {
-        return proxyTarget.getInventory().getItem(p_18941_);
-    }
-
-    @Override
-    public ItemStack removeItem(int p_18942_, int p_18943_) {
-        return proxyTarget.getInventory().removeItem(p_18942_,p_18943_);
-    }
-
-    @Override
-    public ItemStack removeItemNoUpdate(int p_18951_) {
-        return proxyTarget.getInventory().removeItemNoUpdate(p_18951_);
-    }
-
-    @Override
-    public void setItem(int p_18944_, ItemStack p_18945_) {
-        proxyTarget.getInventory().setItem(p_18944_,p_18945_);
-    }
-
-    @Override
-    public boolean stillValid(Player p_18946_) {
-        return proxyTarget != null && proxyTarget.getInventory().stillValid(p_18946_);
-    }
-
-    @Override
-    public void clearContent() {
-
     }
 
     @Override
@@ -157,8 +120,7 @@ public class InventoryEntityProxyBlockEntity extends DataBlockEntity implements 
 
     public void tick(Level level ,BlockPos pos ,BlockState state){
         if(level.isClientSide) return;
-        boolean isProxyNull = getAddressItem(0).isEmpty() || proxyTarget == null || !(proxyTarget instanceof Entity entity) || !entity.isAlive();
-        if(isProxyNull){
+        if(isProxyNull()){
             proxyTarget = null;
             setProxyTargetID(0);
             blockChange();
@@ -180,8 +142,9 @@ public class InventoryEntityProxyBlockEntity extends DataBlockEntity implements 
         return integer != 0 ? integer : null;
     }
 
-    public void onRemove(){
-        reset();
+    @Nullable
+    public T getProxyTarget(){
+        return this.proxyTarget;
     }
 
     public void setError(Integer num){
@@ -192,21 +155,11 @@ public class InventoryEntityProxyBlockEntity extends DataBlockEntity implements 
         return this.blockEntityData.get(ERROR_TYPE);
     }
 
-    public void blockChange(){
-        if(!(this.level instanceof ServerLevel serverLevel)) return;
-        if(this.getAddressItem(0).isEmpty()){
-            setError(0);
-        }else if(getAddress(0) == null){
-            setError(1);
-        }else if(serverLevel.getEntity(getAddress(0)) instanceof InventoryCarrier inventoryCarrier){
-            setError(0);
-            Entity entity = serverLevel.getEntity(getAddress(0));
-            this.proxyTarget = inventoryCarrier;
-            setProxyTargetID(entity.getId());
-        }else{
-            setError(4);
-        }
-    }
+    public abstract boolean isProxyNull();
+
+    public abstract void blockChange();
+
+
 
     @Override
     public Component messages() {

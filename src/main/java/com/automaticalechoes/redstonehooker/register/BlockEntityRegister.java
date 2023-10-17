@@ -1,7 +1,11 @@
 package com.automaticalechoes.redstonehooker.register;
 
 import com.automaticalechoes.redstonehooker.RedstoneHooker;
-import com.automaticalechoes.redstonehooker.common.blockentity.*;
+import com.automaticalechoes.redstonehooker.common.blockentity.BlockPosProxy.AnisotropicSignalBlockEntity;
+import com.automaticalechoes.redstonehooker.common.blockentity.BlockPosProxy.GatewayProxyBlockEntity;
+import com.automaticalechoes.redstonehooker.common.blockentity.BlockPosProxy.ProxyBlockEntity;
+import com.automaticalechoes.redstonehooker.common.blockentity.UUIDProxy.ArmorProxyBlockEntity;
+import com.automaticalechoes.redstonehooker.common.blockentity.UUIDProxy.InventoryEntityProxyBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;

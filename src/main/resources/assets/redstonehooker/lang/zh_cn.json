@@ -22,5 +22,6 @@
   "address_error_type_1": "无效标签",
   "address_error_type_2": "坐标无方块实体",
   "address_error_type_3": "禁止套娃",
-  "address_error_type_4": "无效实体"
+  "address_error_type_4": "无效实体",
+  "address_error_type_5": "坐标无可代理方块"
 }

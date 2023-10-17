@@ -2,6 +2,7 @@ package com.automaticalechoes.redstonehooker.client;
 
 import com.automaticalechoes.redstonehooker.RedstoneHooker;
 import com.automaticalechoes.redstonehooker.api.fakeBlock.FakeBlock;
+import com.automaticalechoes.redstonehooker.client.model.EndCauldronLay;
 import com.automaticalechoes.redstonehooker.client.model.FakeChestModel;
 import com.automaticalechoes.redstonehooker.client.render.*;
 import com.automaticalechoes.redstonehooker.common.entity.AddressTagProjectile;
@@ -32,7 +33,7 @@ public class ClientModEvents {
     public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(FakeBlock.FAKE_BLOCK,FakeBlock::createBlockLayer);
         event.registerLayerDefinition(FakeChestModel.FAKE_CHEST,FakeChestModel::createBodyLayer);
-
+        event.registerLayerDefinition(EndCauldronLay.END_CAULDRON,EndCauldronLay::createBodyLayer);
     }
 
     @SubscribeEvent

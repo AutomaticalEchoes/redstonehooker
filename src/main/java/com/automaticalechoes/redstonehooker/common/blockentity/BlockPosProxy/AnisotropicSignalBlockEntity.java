@@ -1,4 +1,4 @@
-package com.automaticalechoes.redstonehooker.common.blockentity;
+package com.automaticalechoes.redstonehooker.common.blockentity.BlockPosProxy;
 
 import com.automaticalechoes.redstonehooker.api.addressItem.AddressItemInner;
 import com.automaticalechoes.redstonehooker.api.dataBlockEntity.DataBlockEntity;
@@ -102,6 +102,12 @@ public class AnisotropicSignalBlockEntity extends DataBlockEntity implements Add
     }
 
     @Override
+    public void reset() {
+        removeAllListener();
+        dropAll();
+    }
+
+    @Override
     public ItemStack getAddressItem(int num) {
         return addressItems.get(num);
     }
@@ -110,11 +116,6 @@ public class AnisotropicSignalBlockEntity extends DataBlockEntity implements Add
     public void setRemoved() {
         removeAllListener();
         super.setRemoved();
-    }
-
-    public void onRemove(){
-        removeAllListener();
-        dropAll();
     }
 
     public void dropItem(ItemStack itemStack){

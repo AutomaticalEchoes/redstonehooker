@@ -20,6 +20,8 @@ public interface AddressItemInner<T> {
 
     void unValidItem(ItemStack itemStack,int num);
 
+    void reset();
+
     ItemStack getAddressItem(int num);
 
     default void setAddressItem(ItemStack itemStack ,int num){

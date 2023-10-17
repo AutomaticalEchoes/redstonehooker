@@ -1,7 +1,7 @@
 package com.automaticalechoes.redstonehooker.register;
 
 import com.automaticalechoes.redstonehooker.RedstoneHooker;
-import com.automaticalechoes.redstonehooker.common.block.*;
+import com.automaticalechoes.redstonehooker.common.block.AddressInner.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
@@ -11,6 +11,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+
+import java.util.function.Supplier;
 
 public class BlockRegister {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, RedstoneHooker.MODID);
@@ -53,6 +55,8 @@ public class BlockRegister {
             .noOcclusion()
             .sound(SoundType.WOOD)
             .isViewBlocking(BlockRegister::never)));
+
+    public static final RegistryObject<Block> FAKE_NETHER_CAULDRON = BLOCKS.register("fake_nether_cauldron", () -> new Block(BlockBehaviour.Properties.of()));
 
     private static boolean never(BlockState p_50806_, BlockGetter p_50807_, BlockPos p_50808_) {
         return false;

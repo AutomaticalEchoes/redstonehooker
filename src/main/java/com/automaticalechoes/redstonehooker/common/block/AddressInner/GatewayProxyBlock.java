@@ -1,17 +1,13 @@
-package com.automaticalechoes.redstonehooker.common.block;
+package com.automaticalechoes.redstonehooker.common.block.AddressInner;
 
 import com.automaticalechoes.redstonehooker.api.hooker.Proxys;
-import com.automaticalechoes.redstonehooker.common.blockentity.GatewayProxyBlockEntity;
-import com.automaticalechoes.redstonehooker.common.blockentity.InventoryEntityProxyBlockEntity;
-import com.automaticalechoes.redstonehooker.common.blockentity.ProxyBlockEntity;
+import com.automaticalechoes.redstonehooker.common.block.AddressInnerBlock;
+import com.automaticalechoes.redstonehooker.common.blockentity.BlockPosProxy.GatewayProxyBlockEntity;
 import com.automaticalechoes.redstonehooker.register.BlockEntityRegister;
 import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -22,7 +18,7 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-public class GatewayProxyBlock extends BaseEntityBlock {
+public class GatewayProxyBlock extends AddressInnerBlock {
     private static final VoxelShape INSIDE = box(2.0D, 4.0D, 2.0D, 14.0D, 16.0D, 14.0D);
     protected static final VoxelShape SHAPE = Shapes.join(Shapes.block(),
             Shapes.or(box(0.0D, 0.0D, 4.0D, 16.0D, 3.0D, 12.0D),
@@ -54,13 +50,5 @@ public class GatewayProxyBlock extends BaseEntityBlock {
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level p_153212_, BlockState p_153213_, BlockEntityType<T> p_153214_) {
         return (p_155253_, p_155254_, p_155255_, p_155256_) -> ((GatewayProxyBlockEntity)p_155256_).tick(p_155253_,p_155254_,p_155255_);
-    }
-
-    @Override
-    public void onRemove(BlockState p_60515_, Level p_60516_, BlockPos p_60517_, BlockState p_60518_, boolean p_60519_) {
-        if(p_60516_.getBlockEntity(p_60517_) instanceof GatewayProxyBlockEntity gatewayProxyBlockEntity){
-            gatewayProxyBlockEntity.onRemove();
-        }
-        super.onRemove(p_60515_, p_60516_, p_60517_, p_60518_, p_60519_);
     }
 }

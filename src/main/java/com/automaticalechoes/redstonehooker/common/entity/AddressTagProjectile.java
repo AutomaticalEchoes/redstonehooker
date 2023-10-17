@@ -109,7 +109,7 @@ public class AddressTagProjectile extends AbstractArrow implements ItemSupplier 
         if(AddressItem.putAddress(defaultInstance,p_37258_.getBlockPos(),p_37258_.getDirection().get3DDataValue())) {
             serverLevel.sendParticles(ParticleTypes.GLOW,this.getX() ,this.getY() ,this.getZ(),20,0,1,0,0.05D);
             player.addItem(defaultInstance);
-            player.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP);
+            player.playSound(SoundEvents.PLAYER_LEVELUP);
             this.discard();
         }
 
@@ -129,14 +129,14 @@ public class AddressTagProjectile extends AbstractArrow implements ItemSupplier 
 
         ItemStack defaultInstance = ItemRegister.ADDRESS_ITEM.get().getDefaultInstance();
         if(AddressItem.putEntityAddress(defaultInstance,p_37259_.getEntity().getUUID(),this.getItem().getHoverName(),p_37259_.getEntity() instanceof Player)){
-            serverLevel.sendParticles(ParticleTypes.GLOW,this.getX() + 0.1 * random.nextInt(-1,1),this.getY() ,this.getZ() + 0.1 * random.nextInt(-1,1),20,0,10,0,0.05D);
             Entity entity = p_37259_.getEntity();
+            serverLevel.sendParticles(ParticleTypes.GLOW, entity.getX() , entity.getY() , entity.getZ(),20,0,1,0,0.05D);
             entity.setCustomName(this.getItem().getHoverName());
             if (entity instanceof Mob) {
                 ((Mob)entity).setPersistenceRequired();
             }
             player.addItem(defaultInstance);
-            player.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP);
+            player.playSound(SoundEvents.PLAYER_LEVELUP);
             this.discard();
         }
     }

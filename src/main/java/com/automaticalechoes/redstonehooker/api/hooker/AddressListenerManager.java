@@ -1,6 +1,6 @@
 package com.automaticalechoes.redstonehooker.api.hooker;
 
-import com.automaticalechoes.redstonehooker.common.blockentity.AnisotropicSignalBlockEntity;
+import com.automaticalechoes.redstonehooker.common.blockentity.BlockPosProxy.AnisotropicSignalBlockEntity;
 import net.minecraft.core.BlockPos;
 import org.antlr.v4.runtime.misc.MultiMap;
 

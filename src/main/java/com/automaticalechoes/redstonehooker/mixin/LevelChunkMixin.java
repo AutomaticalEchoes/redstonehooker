@@ -2,7 +2,7 @@ package com.automaticalechoes.redstonehooker.mixin;
 
 import com.automaticalechoes.redstonehooker.api.hooker.AddressListenerManager;
 import com.automaticalechoes.redstonehooker.api.hooker.ILevelChunk;
-import com.automaticalechoes.redstonehooker.common.blockentity.ProxyBlockEntity;
+import com.automaticalechoes.redstonehooker.common.blockentity.BlockPosProxy.ProxyBlockEntity;
 import com.automaticalechoes.redstonehooker.event.server.OnListenPosChange;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;

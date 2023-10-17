@@ -1,42 +1,26 @@
-package com.automaticalechoes.redstonehooker.common.block;
+package com.automaticalechoes.redstonehooker.common.block.AddressInner;
 
-import com.automaticalechoes.redstonehooker.common.blockentity.ArmorProxyBlockEntity;
-import com.automaticalechoes.redstonehooker.common.blockentity.InventoryEntityProxyBlockEntity;
+import com.automaticalechoes.redstonehooker.common.block.AddressInnerBlock;
+import com.automaticalechoes.redstonehooker.common.blockentity.UUIDProxy.ArmorProxyBlockEntity;
 import com.automaticalechoes.redstonehooker.register.BlockEntityRegister;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.util.Mth;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.*;
-import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import javax.annotation.Nullable;
-
-public class ArmorProxyBlock extends BaseEntityBlock {
-    public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
-    public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
+public class ArmorProxyBlock extends AddressInnerBlock {
     private static final VoxelShape SHAPE = Block.box(1.0F,1.0F,1.0F,15.0F,15.0F,15.0F);
 //    public static final EnumProperty<DoubleBlockHalf> HALF = BlockStateProperties.DOUBLE_BLOCK_HALF;
     public ArmorProxyBlock(BlockBehaviour.Properties p_273303_) {
         super(p_273303_);
-        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH)
-                .setValue(POWERED, Boolean.FALSE));
+
 //        .setValue(HALF, DoubleBlockHalf.LOWER)
     }
 
@@ -103,10 +87,6 @@ public class ArmorProxyBlock extends BaseEntityBlock {
 //        return Mth.getSeed(p_52794_.getX(), p_52794_.below(p_52793_.getValue(HALF) == DoubleBlockHalf.LOWER ? 0 : 1).getY(), p_52794_.getZ());
 //    }
 
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> p_52803_) {
-        p_52803_.add(FACING, POWERED);
-    }
-
 //    protected static void preventCreativeDropFromBottomPart(Level p_52904_, BlockPos p_52905_, BlockState p_52906_, Player p_52907_) {
 //        DoubleBlockHalf doubleblockhalf = p_52906_.getValue(HALF);
 //        if (doubleblockhalf == DoubleBlockHalf.UPPER) {
@@ -133,11 +113,4 @@ public class ArmorProxyBlock extends BaseEntityBlock {
         return (p_155253_, p_155254_, p_155255_, p_155256_) -> ((ArmorProxyBlockEntity)p_155256_).tick(p_155253_,p_155254_,p_155255_);
     }
 
-    @Override
-    public void onRemove(BlockState p_60515_, Level p_60516_, BlockPos p_60517_, BlockState p_60518_, boolean p_60519_) {
-        if(p_60516_.getBlockEntity(p_60517_) instanceof ArmorProxyBlockEntity armorProxyBlockEntity){
-            armorProxyBlockEntity.onRemove();
-        }
-        super.onRemove(p_60515_, p_60516_, p_60517_, p_60518_, p_60519_);
-    }
 }
