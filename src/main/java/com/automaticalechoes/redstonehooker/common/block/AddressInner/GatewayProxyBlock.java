@@ -35,7 +35,7 @@ public class GatewayProxyBlock extends AddressInnerBlock {
 
     @Override
     public void entityInside(BlockState p_60495_, Level p_60496_, BlockPos p_60497_, Entity p_60498_) {
-        if(Proxys.getVanillaBlockEntity(p_60496_,p_60497_) instanceof GatewayProxyBlockEntity proxyBlockEntity)
+        if(Proxys.getVanillaBlockEntity(p_60496_,p_60497_) instanceof GatewayProxyBlockEntity proxyBlockEntity && p_60498_.getY() < p_60497_.getY() + 0.6F)
             proxyBlockEntity.entityInside(p_60498_);
         super.entityInside(p_60495_, p_60496_, p_60497_, p_60498_);
     }

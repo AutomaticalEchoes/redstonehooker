@@ -13,8 +13,10 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -104,7 +106,7 @@ public class AddressTagProjectile extends AbstractArrow implements ItemSupplier 
         this.setSoundEvent(SoundEvents.GLASS_HIT);
         this.playSound(this.getHitGroundSoundEvent(), 1.0F, 1.2F / (this.random.nextFloat() * 0.2F + 0.9F));
         this.setShotFromCrossbow(false);
-        if(!(this.level() instanceof ServerLevel serverLevel) ||!(this.getItem().getItem() instanceof AddressItem && this.getOwner() instanceof Player player)) return;
+        if(!(this.level() instanceof ServerLevel serverLevel) ||!(this.getItem().getItem() instanceof AddressItem && this.getOwner() instanceof ServerPlayer player)) return;
         ItemStack defaultInstance = ItemRegister.ADDRESS_ITEM.get().getDefaultInstance();
         if(AddressItem.putAddress(defaultInstance,p_37258_.getBlockPos(),p_37258_.getDirection().get3DDataValue())) {
             putAndDiscord(serverLevel,player,defaultInstance,this.getX() ,this.getY() ,this.getZ());
@@ -116,7 +118,7 @@ public class AddressTagProjectile extends AbstractArrow implements ItemSupplier 
     public boolean canChangeDimensions() {
         if(this.level() instanceof ServerLevel serverLevel
                 && this.isAlive() && this.getItem().getItem() instanceof AddressItem
-                && this.getOwner() instanceof Player player){
+                && this.getOwner() instanceof ServerPlayer player){
             ItemStack defaultInstance = ItemRegister.ADDRESS_ITEM.get().getDefaultInstance();
             if(AddressItem.putAddress(defaultInstance,this.blockPosition(),0)) {
                 putAndDiscord(serverLevel,player,defaultInstance,this.getX() ,this.getY() ,this.getZ());
@@ -135,7 +137,7 @@ public class AddressTagProjectile extends AbstractArrow implements ItemSupplier 
     protected void onHitEntity(EntityHitResult p_37259_) {
         if(!(this.level() instanceof ServerLevel serverLevel)
                 || !p_37259_.getEntity().isAlive()
-                || !(this.getItem().getItem() instanceof AddressNameTagItem && this.getOwner() instanceof Player player)
+                || !(this.getItem().getItem() instanceof AddressNameTagItem && this.getOwner() instanceof ServerPlayer player)
                 || !this.getItem().hasCustomHoverName()) return;
 
         ItemStack defaultInstance = ItemRegister.ADDRESS_ITEM.get().getDefaultInstance();
@@ -150,9 +152,9 @@ public class AddressTagProjectile extends AbstractArrow implements ItemSupplier 
         }
     }
 
-    public void putAndDiscord(ServerLevel serverLevel, Player player, ItemStack itemStack, double x, double y, double z){
-        serverLevel.sendParticles(ParticleTypes.GLOW, x, y, z,20,0,1,0,0.05D);
-        player.playSound(SoundEvents.PLAYER_LEVELUP);
+    public void putAndDiscord(ServerLevel serverLevel, ServerPlayer player, ItemStack itemStack, double x, double y, double z){
+        serverLevel.sendParticles(ParticleTypes.GLOW, x, y, z,40,0,1,0,0.05D);
+        player.playNotifySound(SoundEvents.ITEM_PICKUP, SoundSource.RECORDS,1.0F,1.0F);
         player.addItem(itemStack);
         this.discard();
     }
