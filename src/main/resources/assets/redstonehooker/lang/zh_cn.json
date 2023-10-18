@@ -9,6 +9,8 @@
   "block.redstonehooker.block_entity_proxy_block": "方块实体容器代理箱",
   "block.redstonehooker.anisotropic_signal_block": "信号监听器",
   "block.redstonehooker.inventory_entity_proxy_block": "生物实体容器代理箱",
+  "block.redstonehooker.gateway_proxy_block": "传送门代理箱",
+  "block.redstonehooker.armor_proxy_block": "盔甲代理箱",
 
 
   "tab.type": "类型:",

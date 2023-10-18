@@ -36,7 +36,7 @@ public class BlockRegister {
     public static final RegistryObject<GatewayProxyBlock> GATEWAY_PROXY_BLOCK  = BLOCKS.register("gateway_proxy_block",() -> new GatewayProxyBlock(BlockBehaviour
             .Properties.of()
             .lightLevel(value -> 7)
-            .strength(2.5F)
+            .strength(3.5F)
             .noOcclusion()
             .sound(SoundType.WOOD)
             .isViewBlocking(BlockRegister::never)));

@@ -2,6 +2,7 @@
   "replace": false,
   "values": [
     "redstonehooker:block_entity_proxy_block",
-    "redstonehooker:inventory_entity_proxy_block"
+    "redstonehooker:inventory_entity_proxy_block",
+    "redstonehooker:armor_proxy_block"
   ]
 }

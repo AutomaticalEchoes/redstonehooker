@@ -107,12 +107,23 @@ public class AddressTagProjectile extends AbstractArrow implements ItemSupplier 
         if(!(this.level() instanceof ServerLevel serverLevel) ||!(this.getItem().getItem() instanceof AddressItem && this.getOwner() instanceof Player player)) return;
         ItemStack defaultInstance = ItemRegister.ADDRESS_ITEM.get().getDefaultInstance();
         if(AddressItem.putAddress(defaultInstance,p_37258_.getBlockPos(),p_37258_.getDirection().get3DDataValue())) {
-            serverLevel.sendParticles(ParticleTypes.GLOW,this.getX() ,this.getY() ,this.getZ(),20,0,1,0,0.05D);
-            player.addItem(defaultInstance);
-            player.playSound(SoundEvents.PLAYER_LEVELUP);
-            this.discard();
+            putAndDiscord(serverLevel,player,defaultInstance,this.getX() ,this.getY() ,this.getZ());
         }
 
+    }
+
+    @Override
+    public boolean canChangeDimensions() {
+        if(this.level() instanceof ServerLevel serverLevel
+                && this.isAlive() && this.getItem().getItem() instanceof AddressItem
+                && this.getOwner() instanceof Player player){
+            ItemStack defaultInstance = ItemRegister.ADDRESS_ITEM.get().getDefaultInstance();
+            if(AddressItem.putAddress(defaultInstance,this.blockPosition(),0)) {
+                putAndDiscord(serverLevel,player,defaultInstance,this.getX() ,this.getY() ,this.getZ());
+                return false;
+            }
+        }
+        return super.canChangeDimensions();
     }
 
     @Override
@@ -130,15 +141,20 @@ public class AddressTagProjectile extends AbstractArrow implements ItemSupplier 
         ItemStack defaultInstance = ItemRegister.ADDRESS_ITEM.get().getDefaultInstance();
         if(AddressItem.putEntityAddress(defaultInstance,p_37259_.getEntity().getUUID(),this.getItem().getHoverName(),p_37259_.getEntity() instanceof Player)){
             Entity entity = p_37259_.getEntity();
-            serverLevel.sendParticles(ParticleTypes.GLOW, entity.getX() , entity.getY() , entity.getZ(),20,0,1,0,0.05D);
             entity.setCustomName(this.getItem().getHoverName());
             if (entity instanceof Mob) {
                 ((Mob)entity).setPersistenceRequired();
             }
-            player.addItem(defaultInstance);
-            player.playSound(SoundEvents.PLAYER_LEVELUP);
-            this.discard();
+
+            putAndDiscord(serverLevel,player,defaultInstance,entity.getX(),entity.getY(),entity.getZ());
         }
+    }
+
+    public void putAndDiscord(ServerLevel serverLevel, Player player, ItemStack itemStack, double x, double y, double z){
+        serverLevel.sendParticles(ParticleTypes.GLOW, x, y, z,20,0,1,0,0.05D);
+        player.playSound(SoundEvents.PLAYER_LEVELUP);
+        player.addItem(itemStack);
+        this.discard();
     }
 
     @Override
