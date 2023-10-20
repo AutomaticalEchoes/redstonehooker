@@ -100,6 +100,6 @@ public class InventoryEntityProxyBlockEntityRender implements BlockEntityRendere
 
     @Override
     public float fakeTranslateY() {
-        return 1.5F;
+        return 1.4375F;
     }
 }

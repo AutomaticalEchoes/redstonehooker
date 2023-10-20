@@ -100,6 +100,6 @@ public class ArmorProxyBlockEntityRender implements BlockEntityRenderer<ArmorPro
 
     @Override
     public float fakeTranslateY() {
-        return 1.5F;
+        return 1.4375F;
     }
 }

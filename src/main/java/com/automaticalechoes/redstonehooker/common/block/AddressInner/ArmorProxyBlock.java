@@ -16,7 +16,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class ArmorProxyBlock extends AddressInnerBlock {
-    private static final VoxelShape SHAPE = Block.box(1.0F,1.0F,1.0F,15.0F,15.0F,15.0F);
+    private static final VoxelShape SHAPE = Block.box(1.0F,0.0F,1.0F,15.0F,14.0F,15.0F);
 //    public static final EnumProperty<DoubleBlockHalf> HALF = BlockStateProperties.DOUBLE_BLOCK_HALF;
     public ArmorProxyBlock(BlockBehaviour.Properties p_273303_) {
         super(p_273303_);

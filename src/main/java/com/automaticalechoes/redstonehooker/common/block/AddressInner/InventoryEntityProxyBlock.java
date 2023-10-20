@@ -15,7 +15,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 public class InventoryEntityProxyBlock extends AddressInnerBlock {
-    private static final VoxelShape SHAPE = Block.box(1.0F,1.0F,1.0F,15.0F,15.0F,15.0F);
+    private static final VoxelShape SHAPE = Block.box(1.0F,0.0F,1.0F,15.0F,14.0F,15.0F);
     public InventoryEntityProxyBlock(Properties p_49224_) {
         super(p_49224_);
     }

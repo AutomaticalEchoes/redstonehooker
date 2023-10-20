@@ -19,7 +19,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 public class BlockEntityProxyBlock extends AddressInnerBlock {
-    private static final VoxelShape SHAPE = Block.box(1.0F,1.0F,1.0F,15.0F,15.0F,15.0F);
+    private static final VoxelShape SHAPE = Block.box(1.0F,0.0F,1.0F,15.0F,14.0F,15.0F);
     public BlockEntityProxyBlock(Properties p_49795_) {
         super(p_49795_);
     }
