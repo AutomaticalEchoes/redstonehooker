@@ -66,7 +66,6 @@ public class AddressTagProjectile extends AbstractArrow implements ItemSupplier 
         this.setItem(itemStack);
     }
 
-
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.getEntityData().define(DATA_ITEM_STACK, ItemStack.EMPTY);

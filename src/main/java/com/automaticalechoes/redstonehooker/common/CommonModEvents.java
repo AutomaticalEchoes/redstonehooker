@@ -2,8 +2,6 @@ package com.automaticalechoes.redstonehooker.common;
 
 import com.automaticalechoes.redstonehooker.RedstoneHooker;
 import com.automaticalechoes.redstonehooker.common.netWork.PacketHandler;
-import net.minecraft.world.level.ChunkPos;
-import net.minecraftforge.event.level.ChunkEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -16,7 +14,6 @@ public class CommonModEvents {
     public static void commonSetup(final FMLCommonSetupEvent event) {
         CHANNEL = PacketHandler.RegisterPacket();
     }
-
 
 
 }
