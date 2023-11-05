@@ -172,11 +172,11 @@ public abstract class UUIDProxyBlockEntity<T> extends DataBlockEntity implements
                 proxyTarget = entity.getDisplayName();
         }
 
-        MutableComponent addressComponent = Component.translatable("tab.proxy_target").append(proxyTarget);
+        MutableComponent addressComponent = Component.translatable("redstonehooker.tab.proxy_target").append(proxyTarget);
         component.append(addressComponent);
         if(ErrorType() != 0){
-            component.append(Component.translatable("tab.error")
-                    .append(Component.translatable("address_error_type_" + ErrorType())));
+            component.append(Component.translatable("redstonehooker.tab.error")
+                    .append(Component.translatable("redstonehooker.address_error_type_" + ErrorType())));
         }
         return component;
     }

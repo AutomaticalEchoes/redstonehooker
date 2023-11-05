@@ -1,5 +1,5 @@
 {
-  "itemGroup": "偷盗工程师",
+  "redstonehooker.itemGroup": "偷盗工程师",
   "redstonehooker": "偷盗工程师",
 
   "item.redstonehooker.hooker_tag_item": "窃贼密文",
@@ -13,17 +13,17 @@
   "block.redstonehooker.armor_proxy_block": "盔甲代理箱",
 
 
-  "tab.type": "类型:",
-  "tab.error": "错误:",
-  "tab.address": "坐标:",
-  "tab.proxy_target": "实体:",
+  "redstonehooker.tab.type": "类型:",
+  "redstonehooker.tab.error": "错误:",
+  "redstonehooker.tab.address": "坐标:",
+  "redstonehooker.tab.proxy_target": "实体:",
 
-  "type.entity": "背包持有实体",
-  "type.block_pos": "方块坐标",
+  "redstonehooker.type.entity": "背包持有实体",
+  "redstonehooker.type.block_pos": "方块坐标",
 
-  "address_error_type_1": "无效标签",
-  "address_error_type_2": "坐标无方块实体",
-  "address_error_type_3": "禁止套娃",
-  "address_error_type_4": "无效实体",
-  "address_error_type_5": "坐标无可代理方块"
+  "redstonehooker.address_error_type_1": "无效标签",
+  "redstonehooker.address_error_type_2": "坐标无方块实体",
+  "redstonehooker.address_error_type_3": "禁止套娃",
+  "redstonehooker.address_error_type_4": "无效实体",
+  "redstonehooker.address_error_type_5": "坐标无可代理方块"
 }

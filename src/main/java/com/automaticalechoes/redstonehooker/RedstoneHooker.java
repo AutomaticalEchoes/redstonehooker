@@ -36,7 +36,7 @@ public class RedstoneHooker
 
     public static final RegistryObject<CreativeModeTab> REDSTONE_HOOKER = CREATIVE_MODE_TABS.register("redstone_hooker", () -> CreativeModeTab.builder()
             .withTabsBefore(CreativeModeTabs.COMBAT)
-            .title(Component.translatable("itemGroup"))
+            .title(Component.translatable("redstonehooker.itemGroup"))
             .icon(() -> ItemRegister.HOOKER_TAG.get().getDefaultInstance())
             .displayItems((parameters, output) -> {
                 for (RegistryObject<? extends Item> modItem : ItemRegister.MOD_ITEMS) {

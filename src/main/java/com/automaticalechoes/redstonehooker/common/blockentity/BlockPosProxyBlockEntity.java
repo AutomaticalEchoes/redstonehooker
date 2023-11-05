@@ -150,11 +150,11 @@ public abstract class BlockPosProxyBlockEntity<T> extends DataBlockEntity implem
     public Component messages() {
         MutableComponent component = Component.empty();
         BlockPos address = getAddress(0);
-        MutableComponent addressComponent = Component.translatable("tab.address").append(address != null ? address.getCenter().toString() : "none");
+        MutableComponent addressComponent = Component.translatable("redstonehooker.tab.address").append(address != null ? address.getCenter().toString() : "none");
         component.append(addressComponent);
         if(ErrorType() != 0){
-            component.append(Component.translatable("tab.error")
-                                      .append(Component.translatable("address_error_type_" + ErrorType())));
+            component.append(Component.translatable("redstonehooker.tab.error")
+                                      .append(Component.translatable("redstonehooker.address_error_type_" + ErrorType())));
         }
         return component;
     }
